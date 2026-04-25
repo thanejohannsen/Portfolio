@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thane Johannsen — Engineering Portfolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --accent: #4f8ef7;
+      --accent2: #e06c2e;
+      --text: #e8eaf0;
+      --muted: #8a8fa8;
+      --radius: 10px;
+      --max-w: 1100px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,17,23,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #2a2d3e;
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    nav .logo { font-weight: 700; font-size: 1rem; letter-spacing: 0.04em; color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color .2s; }
+    nav a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 5rem 2rem 3.5rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); font-weight: 600; margin-bottom: 0.6rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      max-width: 640px; color: var(--muted); font-size: 1rem; margin-bottom: 1.8rem;
+    }
+    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 0.55rem 1.3rem; border-radius: 6px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: opacity .2s;
+    }
+    .btn:hover { opacity: 0.82; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ghost { border: 1px solid #3a3d52; color: var(--text); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
+    .tag {
+      font-size: 0.78rem; padding: 0.25rem 0.7rem; border-radius: 100px;
+      background: var(--surface2); color: var(--muted); border: 1px solid #2e3148;
+    }
+
+    /* ── SECTION SHELL ── */
+    section {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 3rem 2rem;
+      border-top: 1px solid #1e2131;
+    }
+    .section-label {
+      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); font-weight: 600; margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;
+    }
+
+    /* ── PROJECT CARDS ── */
+    .project {
+      background: var(--surface); border: 1px solid #252840;
+      border-radius: var(--radius); margin-bottom: 2.5rem;
+      overflow: hidden;
+    }
+    .project-header {
+      padding: 1.4rem 1.6rem 0.6rem;
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem;
+    }
+    .project-title { font-size: 1.15rem; font-weight: 700; }
+    .project-sub { font-size: 0.85rem; color: var(--muted); }
+    .project-date { margin-left: auto; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+    .project-desc { padding: 0 1.6rem 1.2rem; color: var(--muted); font-size: 0.93rem; }
+    .project-desc strong { color: var(--text); }
+    .project-tags { padding: 0 1.6rem 1.4rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-tag {
+      font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 100px;
+      background: #1e2235; color: #6b7aaa; border: 1px solid #2a2f4a;
+    }
+
+    /* ── IMAGE GRIDS ── */
+    .img-grid {
+      display: grid; gap: 3px;
+      padding: 0 1.6rem 1.6rem;
+    }
+    .img-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .img-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .img-grid.cols-1 { grid-template-columns: 1fr; }
+
+    .img-wrap {
+      overflow: hidden; border-radius: 6px;
+      background: var(--surface2);
+      position: relative;
+    }
+    .img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .35s ease;
+    }
+    .img-wrap:hover img { transform: scale(1.03); }
+
+    .img-wrap.tall { height: 280px; }
+    .img-wrap.medium { height: 220px; }
+    .img-wrap.short { height: 180px; }
+    .img-wrap.wide { height: 240px; }
+    .img-wrap.plot { height: 260px; }
+    .img-wrap.plot img { object-fit: contain; background: #fff; padding: 4px; }
+
+    .img-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      color: #dde; font-size: 0.72rem; padding: 1rem 0.7rem 0.5rem;
+      opacity: 0; transition: opacity .25s;
+    }
+    .img-wrap:hover .img-caption { opacity: 1; }
+
+    /* placeholder slot */
+    .img-placeholder {
+      border-radius: 6px; border: 2px dashed #2e3350;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #3a3f5c; font-size: 0.8rem; text-align: center; padding: 1rem;
+      height: 220px;
+    }
+    .img-placeholder span { font-size: 1.6rem; margin-bottom: 0.4rem; }
+
+    /* ── SKILLS GRID ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .skill-card {
+      background: var(--surface); border: 1px solid #252840;
+      border-radius: var(--radius); padding: 1.1rem 1.3rem;
+    }
+    .skill-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+    .skill-card ul { list-style: none; }
+    .skill-card li { font-size: 0.82rem; color: var(--muted); padding: 0.15rem 0; }
+
+    /* ── CONTACT ── */
+    .contact-row { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: var(--surface); border: 1px solid #252840;
+      border-radius: 8px; padding: 0.7rem 1.2rem;
+      color: var(--text); text-decoration: none; font-size: 0.9rem;
+      transition: border-color .2s;
+    }
+    .contact-link:hover { border-color: var(--accent); }
+    .contact-icon { font-size: 1.1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem;
+      font-size: 0.8rem; color: #3a3f5c;
+      border-top: 1px solid #1e2131;
+    }
+
+    @media (max-width: 640px) {
+      .img-grid.cols-4, .img-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+      .img-grid.cols-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">TJ</span>
+  <ul>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-eyebrow">Engineering Portfolio</div>
+  <h1>Thane Johannsen</h1>
+  <p>
+    Mechanical engineer with 2 years of structural analysis, FEA, material qualification, and hands-on
+    prototyping experience. UT Austin ME '24 — 3.89 GPA. Based in Austin, TX.
+  </p>
+  <div class="hero-links">
+    <a class="btn btn-primary" href="mailto:thanejohannsen@gmail.com">Get in Touch</a>
+    <a class="btn btn-ghost" href="https://linkedin.com/in/thane-johannsen" target="_blank">LinkedIn</a>
+  </div>
+  <div class="tags">
+    <span class="tag">FEA · NASTRAN / PATRAN</span>
+    <span class="tag">CATIA</span>
+    <span class="tag">Python Automation</span>
+    <span class="tag">Structural Analysis</span>
+    <span class="tag">Material Qualification</span>
+    <span class="tag">MATLAB</span>
+    <span class="tag">Prototyping &amp; Machining</span>
+    <span class="tag">Vibration Analysis</span>
+  </div>
+</div>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <div class="section-title">Projects &amp; Research</div>
+
+  <!-- 1 · CAPSTONE ────────────────────────────────────────────────── -->
+  <div class="project">
+    <div class="project-header">
+      <span class="project-title">Robotic Arm Vibration Characterization</span>
+      <span class="project-sub">UT Austin Capstone</span>
+      <span class="project-date">Jan – May 2024</span>
+    </div>
+    <div class="project-desc">
+      Designed and built a calibration test stand to characterize and minimize vibrations of a robotic arm
+      on semiconductor mainframes. Instrumented the 3-D printer carriage with
+      <strong>PCB Piezotronics accelerometers</strong>, captured free-response decay data via a
+      <strong>Zoom F8 DAQ</strong>, and modeled the structural dynamics in MATLAB — extracting
+      <strong>damping ratios and spring constants</strong> to quantify positioning error and evaluate
+      isolation strategies.
+    </div>
+    <div class="img-grid cols-4">
+      <div class="img-wrap medium">
+        <img src="images/capstone_setup.jpeg" alt="Test stand — 3D printer on lab bench" />
+        <div class="img-caption">Test setup: printer on lab bench</div>
+      </div>
+      <div class="img-wrap medium">
+        <img src="images/capstone_isolation.jpeg" alt="Printer on vibration isolation table" />
+        <div class="img-caption">Free-response: printer on isolation table</div>
+      </div>
+      <div class="img-wrap medium">
+        <img src="images/capstone_daq.jpeg" alt="Zoom F8 DAQ + PCB Piezotronics signal conditioner" />
+        <div class="img-caption">Zoom F8 + PCB Piezotronics DAQ</div>
+      </div>
+      <div class="img-wrap medium plot">
+        <img src="images/capstone_freeresponse.png" alt="Free Response for Tool Head — MATLAB plot" />
+        <div class="img-caption">Free response — tool head acceleration decay</div>
+      </div>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Vibration Analysis</span>
+      <span class="project-tag">Accelerometer Instrumentation</span>
+      <span class="project-tag">MATLAB System ID</span>
+      <span class="project-tag">Test Stand Design</span>
+      <span class="project-tag">Structural Dynamics</span>
+    </div>
+  </div>
+
+  <!-- 2 · BATTLE BOT ──────────────────────────────────────────────── -->
+  <div class="project">
+    <div class="project-header">
+      <span class="project-title">Combat Robot (Battle Bot)</span>
+      <span class="project-sub">UT Austin — ME 366J</span>
+      <span class="project-date">Aug – Dec 2023</span>
+    </div>
+    <div class="project-desc">
+      Designed, fabricated, and competed with a combat robot under strict weight and budget constraints.
+      Owned <strong>chassis structural design</strong> — truss topology selected for stiffness-to-weight,
+      3-D printed body in low-density, high-flexibility polymer to absorb impact.
+      <strong>Machined steel plow mechanisms</strong> from stock for the weapon system.
+      Iterated on geometry from CAD model through physical build to competition-ready hardware.
+    </div>
+    <div class="img-grid cols-2">
+      <div class="img-wrap tall">
+        <img src="images/battlebot_cad.jpeg" alt="Battle Bot SolidWorks CAD render" />
+        <div class="img-caption">SolidWorks CAD — transparent chassis view</div>
+      </div>
+      <div class="img-wrap tall">
+        <img src="images/battlebot_build.jpeg" alt="Finished Battle Bot physical build" />
+        <div class="img-caption">Completed build — machined steel plows, 3D-printed chassis</div>
+      </div>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">SolidWorks CAD</span>
+      <span class="project-tag">Structural Topology Design</span>
+      <span class="project-tag">Machining</span>
+      <span class="project-tag">Prototyping</span>
+      <span class="project-tag">Material Selection</span>
+    </div>
+  </div>
+
+  <!-- 3 · sEMG ────────────────────────────────────────────────────── -->
+  <div class="project">
+    <div class="project-header">
+      <span class="project-title">Surface EMG Sensor Prototype</span>
+      <span class="project-sub">Lu Research Group — UT Austin</span>
+      <span class="project-date">Jan – May 2022</span>
+    </div>
+    <div class="project-desc">
+      Designed and built a surface EMG sensor from concept through functional hardware to detect
+      <strong>muscle voltage burst patterns</strong> during dynamic movement. Integrated analog
+      voltage detection circuitry and tested on human subjects during treadmill activity.
+      Processed signals in MATLAB via <strong>FFT and Median Frequency analysis</strong>
+      to track muscle fatigue in the frequency domain — targeting a real-time strain-risk wearable concept.
+    </div>
+    <div class="img-grid cols-3">
+      <div class="img-wrap medium">
+        <img src="images/semg_sensor.jpeg" alt="sEMG sensor applied to forearm" />
+        <div class="img-caption">Sensor applied to forearm</div>
+      </div>
+      <div class="img-wrap medium">
+        <img src="images/semg_components.jpeg" alt="sEMG sensor components on workbench" />
+        <div class="img-caption">Sensor circuitry — component layout</div>
+      </div>
+      <div class="img-wrap medium plot">
+        <img src="images/semg_plot.jpeg" alt="MATLAB Median Frequency vs Window plot" />
+        <div class="img-caption">Median frequency vs. time window (fatigue marker)</div>
+      </div>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Sensor Design</span>
+      <span class="project-tag">Circuit Integration</span>
+      <span class="project-tag">MATLAB FFT</span>
+      <span class="project-tag">Signal Processing</span>
+      <span class="project-tag">Prototype Fabrication</span>
+    </div>
+  </div>
+
+  <!-- 4 · DUFFL ───────────────────────────────────────────────────── -->
+  <div class="project">
+    <div class="project-header">
+      <span class="project-title">Demand Forecasting &amp; Staffing Model</span>
+      <span class="project-sub">Duffl — Data Analytics</span>
+      <span class="project-date">Jan 2023 – May 2024</span>
+    </div>
+    <div class="project-desc">
+      Built a <strong>Python forecasting model</strong> predicting hourly order volume and required courier
+      staffing for a rapid-delivery startup. Identified that overloaded couriers (high orders-per-courier)
+      paradoxically correlated with <strong>lower late rates</strong> — denser routes are more efficient —
+      informing a scheduling policy change. Model was adopted by store leadership for weekly shift scheduling
+      and reduced late delivery rate <strong>30% after rollout</strong>.
+    </div>
+    <div class="img-grid cols-2">
+      <div class="img-wrap plot" style="height:280px;">
+        <img src="images/duffl_scatter.png" alt="Late rate vs. orders per courier scatter plot" />
+        <div class="img-caption">Late rate vs. courier workload — key insight driving policy change</div>
+      </div>
+      <div class="img-wrap plot" style="height:280px;">
+        <img src="images/duffl_forecast.png" alt="Predicted orders and courier staffing model" />
+        <div class="img-caption">Demand forecast + automated courier assignment (one week)</div>
+      </div>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Python</span>
+      <span class="project-tag">Pandas / NumPy</span>
+      <span class="project-tag">Predictive Modeling</span>
+      <span class="project-tag">Operations Optimization</span>
+      <span class="project-tag">Data Visualization</span>
+    </div>
+  </div>
+
+  <!-- 5 · LIDAR CAR ──────────────────────────────────────────────── -->
+  <div class="project">
+    <div class="project-header">
+      <span class="project-title">LIDAR Mapping Robot</span>
+      <span class="project-sub">UT Austin — Personal Build</span>
+      <span class="project-date">2022 – 2023</span>
+    </div>
+    <div class="project-desc">
+      Designed and assembled a wheeled robot integrating a <strong>LIDAR sensor</strong> for environmental
+      mapping. 3-D printed chassis mounts electronics, motor controllers, and battery pack in a compact
+      frame. Demonstrates sensor integration, embedded systems wiring, and mechatronic system assembly.
+    </div>
+    <div class="img-grid cols-1">
+      <div class="img-wrap" style="height:320px; max-width:480px;">
+        <img src="images/lidar_car.jpeg" alt="LIDAR mapping robot" />
+        <div class="img-caption">3D-printed chassis with LIDAR, Raspberry Pi, motor controllers</div>
+      </div>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">LIDAR Integration</span>
+      <span class="project-tag">3D Printing</span>
+      <span class="project-tag">Mechatronics</span>
+      <span class="project-tag">Embedded Systems</span>
+    </div>
+  </div>
+
+  <!-- 6 · TINY HOUSE ─────────────────────────────────────────────── -->
+  <div class="project">
+    <div class="project-header">
+      <span class="project-title">Tiny House Build</span>
+      <span class="project-sub">Personal Project</span>
+      <span class="project-date">2021 – 2022</span>
+    </div>
+    <div class="project-desc">
+      Designed and built a fully functioning tiny house from the ground up — framing, electrical, plumbing,
+      and finish work. Fabricated a <strong>custom wooden staircase</strong> and interior built-ins.
+      Demonstrates large-scope hands-on construction, systems integration (electrical + plumbing),
+      and design-to-build ownership.
+    </div>
+    <div class="img-grid cols-1">
+      <div class="img-wrap" style="height:360px; max-width:540px;">
+        <img src="images/tiny_house.jpeg" alt="Tiny house finished interior with custom staircase" />
+        <div class="img-caption">Finished interior — custom staircase and built-ins</div>
+      </div>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Structural Design</span>
+      <span class="project-tag">Electrical Systems</span>
+      <span class="project-tag">Plumbing</span>
+      <span class="project-tag">Fabrication</span>
+      <span class="project-tag">Design-to-Build Ownership</span>
+    </div>
+  </div>
+
+  <!-- 7 · STAGE BUILD ────────────────────────────────────────────── -->
+  <div class="project">
+    <div class="project-header">
+      <span class="project-title">32' × 40' Outdoor Stage</span>
+      <span class="project-sub">Personal Build</span>
+      <span class="project-date">2022</span>
+    </div>
+    <div class="project-desc">
+      Designed and built a freestanding outdoor performance stage — 1,280 sq ft of structural deck on
+      post-and-beam framing with perimeter railings and integrated backwall. Structural layout designed
+      for distributed live loads and lateral wind loads.
+    </div>
+    <div class="img-grid cols-1">
+      <div class="img-wrap" style="height:340px; max-width:600px;">
+        <img src="images/stage_build.jpeg" alt="Completed 32x40 outdoor stage" />
+        <div class="img-caption">Completed stage — 32' × 40' post-and-beam structure</div>
+      </div>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Structural Design</span>
+      <span class="project-tag">Load Analysis</span>
+      <span class="project-tag">Large-Scale Fabrication</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="section-label">Capabilities</div>
+  <div class="section-title">Technical Skills</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h4>Simulation &amp; Analysis</h4>
+      <ul>
+        <li>MSC NASTRAN / PATRAN</li>
+        <li>FEA — static, fatigue, composites</li>
+        <li>Classical hand calculations</li>
+        <li>Vibration &amp; NVH analysis</li>
+        <li>Tolerance analysis</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4>CAD &amp; Design</h4>
+      <ul>
+        <li>CATIA (3D modeling, drawings)</li>
+        <li>SolidWorks</li>
+        <li>Mechanism design</li>
+        <li>GD&amp;T</li>
+        <li>DFM / DFA</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4>Test &amp; Prototyping</h4>
+      <ul>
+        <li>ASTM coupon test design</li>
+        <li>Material qualification</li>
+        <li>Accelerometer instrumentation</li>
+        <li>Test-stand design &amp; fabrication</li>
+        <li>Machining (steel, composites)</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4>Programming &amp; Data</h4>
+      <ul>
+        <li>Python — NumPy, Pandas, HDF5</li>
+        <li>MATLAB — FFT, signal processing</li>
+        <li>Predictive modeling</li>
+        <li>Git</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4>Engineering Process</h4>
+      <ul>
+        <li>Design reviews (PDR / CDR)</li>
+        <li>FAA / EASA certification</li>
+        <li>Requirements development</li>
+        <li>Substantiation report writing</li>
+        <li>Cross-functional hardware teams</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-label">Reach Out</div>
+  <div class="section-title">Contact</div>
+  <div class="contact-row">
+    <a class="contact-link" href="mailto:thanejohannsen@gmail.com">
+      <span class="contact-icon">✉</span> thanejohannsen@gmail.com
+    </a>
+    <a class="contact-link" href="https://linkedin.com/in/thane-johannsen" target="_blank">
+      <span class="contact-icon">in</span> linkedin.com/in/thane-johannsen
+    </a>
+    <a class="contact-link" href="tel:5129375696">
+      <span class="contact-icon">☎</span> (512) 937-5696
+    </a>
+  </div>
+</section>
+
+<footer>
+  Thane Johannsen · Austin, TX · Built with GitHub Pages
+</footer>
+
+</body>
+</html>
