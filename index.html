@@ -4,481 +4,678 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thane Johannsen — Engineering Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --surface2: #22263a;
-      --accent: #4f8ef7;
-      --accent2: #e06c2e;
-      --text: #e8eaf0;
-      --muted: #8a8fa8;
-      --radius: 10px;
-      --max-w: 1100px;
+      --bg:       #080c14;
+      --card:     #0d1120;
+      --card2:    #111726;
+      --border:   #1c2238;
+      --border2:  #252d46;
+      --accent:   #4d9eff;
+      --accent-g: #3b82f6;
+      --orange:   #ff7c47;
+      --text:     #e8edf8;
+      --muted:    #68748f;
+      --muted2:   #9aa0b8;
+      --radius:   12px;
+      --max-w:    1080px;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
     }
 
     /* ── NAV ── */
     nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(15,17,23,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #2a2d3e;
-      padding: 0 2rem;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
-      height: 56px;
+      padding: 0 2.5rem;
+      height: 60px;
+      background: rgba(8,12,20,0.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    nav .logo { font-weight: 700; font-size: 1rem; letter-spacing: 0.04em; color: var(--accent); }
-    nav ul { list-style: none; display: flex; gap: 1.8rem; }
-    nav a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color .2s; }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.02em;
+    }
+    nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    nav a { color: var(--muted2); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
     nav a:hover { color: var(--text); }
+    .nav-resume {
+      padding: 0.35rem 0.9rem; border-radius: 6px;
+      border: 1px solid var(--border2); color: var(--text) !important;
+      font-size: 0.8rem !important; transition: border-color .2s, background .2s !important;
+    }
+    .nav-resume:hover { border-color: var(--accent) !important; background: rgba(77,158,255,0.08) !important; }
 
     /* ── HERO ── */
     .hero {
-      max-width: var(--max-w); margin: 0 auto;
-      padding: 5rem 2rem 3.5rem;
-    }
-    .hero-eyebrow {
-      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); font-weight: 600; margin-bottom: 0.6rem;
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.15;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      max-width: 640px; color: var(--muted); font-size: 1rem; margin-bottom: 1.8rem;
-    }
-    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn {
-      display: inline-block; padding: 0.55rem 1.3rem; border-radius: 6px;
-      font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: opacity .2s;
-    }
-    .btn:hover { opacity: 0.82; }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-ghost { border: 1px solid #3a3d52; color: var(--text); }
-
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
-    .tag {
-      font-size: 0.78rem; padding: 0.25rem 0.7rem; border-radius: 100px;
-      background: var(--surface2); color: var(--muted); border: 1px solid #2e3148;
-    }
-
-    /* ── SECTION SHELL ── */
-    section {
-      max-width: var(--max-w); margin: 0 auto;
-      padding: 3rem 2rem;
-      border-top: 1px solid #1e2131;
-    }
-    .section-label {
-      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); font-weight: 600; margin-bottom: 0.4rem;
-    }
-    .section-title {
-      font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;
-    }
-
-    /* ── PROJECT CARDS ── */
-    .project {
-      background: var(--surface); border: 1px solid #252840;
-      border-radius: var(--radius); margin-bottom: 2.5rem;
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 2.5rem 5rem;
       overflow: hidden;
     }
-    .project-header {
-      padding: 1.4rem 1.6rem 0.6rem;
-      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem;
+    /* mesh gradient background */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse 70% 60% at 75% 40%, rgba(77,158,255,0.10) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 70%, rgba(59,130,246,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 60% 85%, rgba(255,124,71,0.06) 0%, transparent 55%);
     }
-    .project-title { font-size: 1.15rem; font-weight: 700; }
-    .project-sub { font-size: 0.85rem; color: var(--muted); }
-    .project-date { margin-left: auto; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
-    .project-desc { padding: 0 1.6rem 1.2rem; color: var(--muted); font-size: 0.93rem; }
-    .project-desc strong { color: var(--text); }
-    .project-tags { padding: 0 1.6rem 1.4rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .project-tag {
-      font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 100px;
-      background: #1e2235; color: #6b7aaa; border: 1px solid #2a2f4a;
+    /* faint grid */
+    .hero-grid {
+      position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+    .hero-inner { max-width: var(--max-w); position: relative; }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; letter-spacing: 0.1em;
+      color: var(--accent); font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      max-width: 580px; color: var(--muted2);
+      font-size: 1.05rem; font-weight: 400;
+      margin-bottom: 2.2rem; line-height: 1.7;
+    }
+    .hero-ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2.8rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.6rem 1.4rem; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: all .2s; letter-spacing: 0.01em;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 0 20px rgba(77,158,255,0.3);
+    }
+    .btn-primary:hover { background: #6ab0ff; box-shadow: 0 0 28px rgba(77,158,255,0.45); }
+    .btn-ghost {
+      border: 1px solid var(--border2); color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+    .btn-ghost:hover { border-color: var(--accent); background: rgba(77,158,255,0.07); }
+
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .htag {
+      font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 2.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 32px; height: 1px; background: var(--muted);
+      transition: width .3s;
+    }
+    .scroll-hint:hover .scroll-line { width: 56px; }
+
+    /* ── SECTION ── */
+    section {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 5rem 2.5rem;
+    }
+    .sec-header {
+      display: flex; align-items: baseline; gap: 1rem;
+      margin-bottom: 3rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sec-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--accent); font-weight: 500;
+      letter-spacing: 0.1em;
+    }
+    .sec-title {
+      font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em;
+    }
+
+    /* ── PROJECT CARD ── */
+    .project {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .project:hover {
+      border-color: var(--border2);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(77,158,255,0.06);
+    }
+    .project-top {
+      padding: 1.6rem 1.8rem 0.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+      align-items: start;
+    }
+    .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.15rem; }
+    .project-sub { font-size: 0.82rem; color: var(--muted2); }
+    .project-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--muted); white-space: nowrap;
+      padding-top: 0.2rem;
+    }
+    .project-desc { padding: 0.6rem 1.8rem 1rem; color: var(--muted2); font-size: 0.92rem; }
+    .project-tags { padding: 0 1.8rem 1.6rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .ptag {
+      font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 100px;
+      background: rgba(77,158,255,0.07);
+      border: 1px solid rgba(77,158,255,0.15);
+      color: #7ab4f5;
+      font-family: 'JetBrains Mono', monospace;
     }
 
     /* ── IMAGE GRIDS ── */
-    .img-grid {
-      display: grid; gap: 3px;
-      padding: 0 1.6rem 1.6rem;
-    }
-    .img-grid.cols-2 { grid-template-columns: 1fr 1fr; }
-    .img-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-    .img-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-    .img-grid.cols-1 { grid-template-columns: 1fr; }
+    .img-grid { display: grid; gap: 4px; padding: 0 1.8rem 1rem; }
+    .img-grid.c1 { grid-template-columns: 1fr; }
+    .img-grid.c2 { grid-template-columns: 1fr 1fr; }
+    .img-grid.c3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-grid.c4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
     .img-wrap {
-      overflow: hidden; border-radius: 6px;
-      background: var(--surface2);
-      position: relative;
+      position: relative; overflow: hidden;
+      border-radius: 8px; background: var(--card2);
+      cursor: zoom-in;
     }
     .img-wrap img {
       width: 100%; height: 100%;
       object-fit: cover; display: block;
-      transition: transform .35s ease;
+      transition: transform .4s ease, filter .3s;
     }
-    .img-wrap:hover img { transform: scale(1.03); }
-
-    .img-wrap.tall { height: 280px; }
-    .img-wrap.medium { height: 220px; }
-    .img-wrap.short { height: 180px; }
-    .img-wrap.wide { height: 240px; }
-    .img-wrap.plot { height: 260px; }
-    .img-wrap.plot img { object-fit: contain; background: #fff; padding: 4px; }
-
-    .img-caption {
+    .img-wrap.contain img { object-fit: contain; background: #fff; padding: 8px; }
+    .img-wrap:hover img { transform: scale(1.04); filter: brightness(1.05); }
+    .img-wrap .caption {
       position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.72));
-      color: #dde; font-size: 0.72rem; padding: 1rem 0.7rem 0.5rem;
+      padding: 1.2rem 0.8rem 0.55rem;
+      background: linear-gradient(transparent, rgba(5,8,16,0.85));
+      font-size: 0.7rem; color: rgba(220,228,255,0.85);
       opacity: 0; transition: opacity .25s;
+      pointer-events: none;
     }
-    .img-wrap:hover .img-caption { opacity: 1; }
+    .img-wrap:hover .caption { opacity: 1; }
 
-    /* placeholder slot */
-    .img-placeholder {
-      border-radius: 6px; border: 2px dashed #2e3350;
-      display: flex; flex-direction: column;
+    /* height utilities */
+    .h160 { height: 160px; }
+    .h200 { height: 200px; }
+    .h240 { height: 240px; }
+    .h280 { height: 280px; }
+    .h320 { height: 320px; }
+    .h360 { height: 360px; }
+
+    /* ── VIDEO ── */
+    .video-wrap {
+      border-radius: 8px; overflow: hidden;
+      background: #000; margin: 0 1.8rem 1rem;
+    }
+    .video-wrap video { width: 100%; display: block; max-height: 420px; }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(4,6,12,0.96);
+      backdrop-filter: blur(10px);
       align-items: center; justify-content: center;
-      color: #3a3f5c; font-size: 0.8rem; text-align: center; padding: 1rem;
-      height: 220px;
+      cursor: zoom-out;
     }
-    .img-placeholder span { font-size: 1.6rem; margin-bottom: 0.4rem; }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 92vw; max-height: 90vh;
+      object-fit: contain; border-radius: 8px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+      cursor: default;
+    }
+    #lb-close {
+      position: fixed; top: 1.2rem; right: 1.5rem;
+      font-size: 1.6rem; color: var(--muted2); cursor: pointer; z-index: 1001;
+      background: none; border: none; transition: color .2s;
+    }
+    #lb-close:hover { color: var(--text); }
+    #lb-caption {
+      position: fixed; bottom: 1.5rem; left: 0; right: 0;
+      text-align: center; font-size: 0.8rem; color: var(--muted2);
+      pointer-events: none;
+    }
 
-    /* ── SKILLS GRID ── */
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem;
+    }
     .skill-card {
-      background: var(--surface); border: 1px solid #252840;
-      border-radius: var(--radius); padding: 1.1rem 1.3rem;
-    }
-    .skill-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
-    .skill-card ul { list-style: none; }
-    .skill-card li { font-size: 0.82rem; color: var(--muted); padding: 0.15rem 0; }
-
-    /* ── CONTACT ── */
-    .contact-row { display: flex; flex-wrap: wrap; gap: 1rem; }
-    .contact-link {
-      display: flex; align-items: center; gap: 0.5rem;
-      background: var(--surface); border: 1px solid #252840;
-      border-radius: 8px; padding: 0.7rem 1.2rem;
-      color: var(--text); text-decoration: none; font-size: 0.9rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
       transition: border-color .2s;
     }
-    .contact-link:hover { border-color: var(--accent); }
-    .contact-icon { font-size: 1.1rem; }
+    .skill-card:hover { border-color: var(--border2); }
+    .skill-card h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; font-weight: 500;
+      color: var(--accent); margin-bottom: 0.7rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .skill-card li { list-style: none; font-size: 0.82rem; color: var(--muted2); padding: 0.18rem 0; }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .contact-card {
+      display: flex; align-items: center; gap: 0.7rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.9rem 1.4rem;
+      color: var(--text); text-decoration: none;
+      font-size: 0.88rem; font-weight: 500;
+      transition: border-color .2s, background .2s;
+    }
+    .contact-card:hover { border-color: var(--accent); background: rgba(77,158,255,0.06); }
+    .contact-card svg { opacity: 0.7; flex-shrink: 0; }
 
     /* ── FOOTER ── */
     footer {
-      text-align: center; padding: 2rem;
-      font-size: 0.8rem; color: #3a3f5c;
-      border-top: 1px solid #1e2131;
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.75rem; color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    @media (max-width: 640px) {
-      .img-grid.cols-4, .img-grid.cols-3 { grid-template-columns: 1fr 1fr; }
-      .img-grid.cols-2 { grid-template-columns: 1fr; }
+    /* ── FADE-IN ANIMATION ── */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 680px) {
+      .img-grid.c4, .img-grid.c3 { grid-template-columns: 1fr 1fr; }
+      .img-grid.c2 { grid-template-columns: 1fr; }
+      nav ul { gap: 1rem; }
+      .nav-resume { display: none; }
     }
   </style>
 </head>
 <body>
 
+<!-- ── LIGHTBOX ── -->
+<div id="lightbox" onclick="closeLB(event)">
+  <button id="lb-close" onclick="closeLB()">✕</button>
+  <img id="lb-img" src="" alt="" />
+  <div id="lb-caption"></div>
+</div>
+
+<!-- ── NAV ── -->
 <nav>
-  <span class="logo">TJ</span>
+  <span class="nav-logo">thane.j</span>
   <ul>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a class="nav-resume btn-ghost btn" href="Thane_Johannsen_Resume.docx" download>Resume ↓</a></li>
   </ul>
 </nav>
 
 <!-- ── HERO ── -->
 <div class="hero">
-  <div class="hero-eyebrow">Engineering Portfolio</div>
-  <h1>Thane Johannsen</h1>
-  <p>
-    Mechanical engineer with 2 years of structural analysis, FEA, material qualification, and hands-on
-    prototyping experience. UT Austin ME '24 — 3.89 GPA.
-  </p>
-  <div class="hero-links">
-    <a class="btn btn-ghost" href="https://linkedin.com/in/thane-johannsen" target="_blank">LinkedIn</a>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// mechanical engineer</div>
+    <h1>Thane<br /><span>Johannsen</span></h1>
+    <p class="hero-sub">
+      FEA · structural analysis · material qualification · Python automation · hands-on prototyping.
+      UT Austin ME '24 — 3.89 GPA.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="Thane_Johannsen_Resume.docx" download>Download Resume</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/thane-johannsen" target="_blank">LinkedIn ↗</a>
+    </div>
+    <div class="hero-tags">
+      <span class="htag">NASTRAN / PATRAN</span>
+      <span class="htag">CATIA</span>
+      <span class="htag">Python</span>
+      <span class="htag">MATLAB</span>
+      <span class="htag">FEA</span>
+      <span class="htag">Material Qualification</span>
+      <span class="htag">Vibration Analysis</span>
+      <span class="htag">Machining</span>
+    </div>
   </div>
-  <div class="tags">
-    <span class="tag">FEA · NASTRAN / PATRAN</span>
-    <span class="tag">CATIA</span>
-    <span class="tag">Python Automation</span>
-    <span class="tag">Structural Analysis</span>
-    <span class="tag">Material Qualification</span>
-    <span class="tag">MATLAB</span>
-    <span class="tag">Prototyping &amp; Machining</span>
-    <span class="tag">Vibration Analysis</span>
+  <div class="scroll-hint">
+    <span class="scroll-line"></span>
+    <span>scroll</span>
   </div>
 </div>
 
 <!-- ── PROJECTS ── -->
 <section id="projects">
-  <div class="section-label">Work</div>
-  <div class="section-title">Projects &amp; Research</div>
+  <div class="sec-header fade-in">
+    <span class="sec-num">01 —</span>
+    <h2 class="sec-title">Projects &amp; Research</h2>
+  </div>
 
-  <!-- 1 · CAPSTONE ────────────────────────────────────────────────── -->
-  <div class="project">
-    <div class="project-header">
-      <span class="project-title">Robotic Arm Vibration Characterization</span>
-      <span class="project-sub">UT Austin Capstone</span>
-      <span class="project-date">Jan – May 2024</span>
+  <!-- CAPSTONE ─────────────────────────────────────── -->
+  <div class="project fade-in">
+    <div class="project-top">
+      <div>
+        <div class="project-title">Structural Dynamics Characterization</div>
+        <div class="project-sub">UT Austin Capstone</div>
+      </div>
+      <div class="project-date">Jan – May 2024</div>
     </div>
     <div class="project-desc">
-      Applied Materials uses large semiconductor machines with robotic arms that move with high precision —
-      to validate those arms before deployment, they test them on external test stands. For the test results
-      to be accurate, the <strong>test stand must replicate the vibrational characteristics of the real machine</strong>.
-      Our capstone developed a process to do exactly that: extract the <strong>damping ratios and spring
-      constants</strong> of a physical structure from free-response accelerometer data, so those properties
-      can be matched when designing a compliant test stand.
-      We applied the methodology to a lab table and a 3-D printer carriage as test objects — instrumented
-      with <strong>PCB Piezotronics accelerometers</strong>, data acquired via a <strong>Zoom F8 DAQ</strong>,
-      and structural dynamics modeled in MATLAB. The project was a direct analog to the cancelled AMAT
-      collaboration: a replicable characterization workflow that generalizes to any structure.
+      Applied Materials tests robotic arms on external test stands before deploying them in production
+      semiconductor machines — but for results to be accurate, the test stand must replicate the
+      vibrational characteristics of the real machine. This project developed a process to extract
+      damping ratios and spring constants from free-response accelerometer data, enabling test stand
+      designs to be tuned to match any target structure.
+      We applied the methodology to a lab table and a 3D printer carriage as test objects — instrumented
+      with PCB Piezotronics accelerometers, acquired with a Zoom F8 DAQ, and modeled in MATLAB. The result
+      is a replicable characterization workflow that generalizes to any structure.
     </div>
-    <div class="img-grid cols-3" style="margin-bottom:3px;">
-      <div class="img-wrap medium">
-        <img src="images/capstone_isolation.jpeg" alt="3D printer on Thorlabs vibration isolation table" />
-        <div class="img-caption">Printer on Thorlabs optical isolation table</div>
+    <div class="img-grid c3" style="margin-bottom:4px;">
+      <div class="img-wrap h200" data-caption="3D printer on vibration isolation table"
+           onclick="openLB(this)">
+        <img src="images/capstone_isolation.jpeg" alt="3D printer on isolation table" />
+        <div class="caption">3D printer on isolation table</div>
       </div>
-      <div class="img-wrap medium">
-        <img src="images/capstone_accelerometer.jpeg" alt="Accelerometer mounted on extruder head" />
-        <div class="img-caption">PCB Piezotronics accelerometer (red arrow) on tool head</div>
+      <div class="img-wrap h200" data-caption="PCB Piezotronics accelerometer (red arrow) on tool head"
+           onclick="openLB(this)">
+        <img src="images/capstone_accelerometer.jpeg" alt="Accelerometer on tool head" />
+        <div class="caption">Accelerometer on tool head</div>
       </div>
-      <div class="img-wrap medium">
-        <img src="images/capstone_daq.jpeg" alt="Zoom F8 DAQ + PCB Piezotronics signal conditioner" />
-        <div class="img-caption">Zoom F8 + PCB Piezotronics DAQ</div>
+      <div class="img-wrap h200" data-caption="Zoom F8 multi-track DAQ + PCB Piezotronics signal conditioner"
+           onclick="openLB(this)">
+        <img src="images/capstone_daq.jpeg" alt="Zoom F8 + PCB Piezotronics DAQ" />
+        <div class="caption">Zoom F8 + PCB Piezotronics DAQ</div>
       </div>
     </div>
-    <div class="img-grid cols-1">
-      <div class="img-wrap plot" style="height:300px;">
-        <img src="images/capstone_freeresponse.png" alt="Free Response for Tool Head — MATLAB plot" />
-        <div class="img-caption">Free response — tool head acceleration decay</div>
+    <div class="img-grid c1">
+      <div class="img-wrap contain h280" data-caption="Free response — tool head acceleration decay (MATLAB)"
+           onclick="openLB(this)">
+        <img src="images/capstone_freeresponse.png" alt="Free Response for Tool Head — MATLAB" />
+        <div class="caption">Free response — tool head acceleration decay</div>
       </div>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Vibration Analysis</span>
-      <span class="project-tag">Accelerometer Instrumentation</span>
-      <span class="project-tag">MATLAB System ID</span>
-      <span class="project-tag">Test Stand Design</span>
-      <span class="project-tag">Structural Dynamics</span>
+      <span class="ptag">Structural Dynamics</span>
+      <span class="ptag">Accelerometer Instrumentation</span>
+      <span class="ptag">MATLAB System ID</span>
+      <span class="ptag">DAQ</span>
+      <span class="ptag">Vibration Analysis</span>
     </div>
   </div>
 
-  <!-- 2 · BATTLE BOT ──────────────────────────────────────────────── -->
-  <div class="project">
-    <div class="project-header">
-      <span class="project-title">Combat Robot (Battle Bot)</span>
-      <span class="project-sub">UT Austin — ME 366J</span>
-      <span class="project-date">Aug – Dec 2023</span>
+  <!-- BATTLE BOT ───────────────────────────────────── -->
+  <div class="project fade-in">
+    <div class="project-top">
+      <div>
+        <div class="project-title">Combat Robot</div>
+        <div class="project-sub">UT Austin — ME 366J</div>
+      </div>
+      <div class="project-date">Aug – Dec 2023</div>
     </div>
     <div class="project-desc">
       Designed, fabricated, and competed with a combat robot under strict weight and budget constraints.
-      Owned <strong>chassis structural design</strong> — truss topology selected for stiffness-to-weight,
-      3-D printed body in low-density, high-flexibility polymer to absorb impact.
-      <strong>Machined steel plow mechanisms</strong> from stock for the weapon system.
-      Iterated on geometry from CAD model through physical build to competition-ready hardware.
+      Owned the chassis structural design — truss topology selected for stiffness-to-weight, 3D-printed
+      body in low-density polymer to absorb impact. Machined steel plow mechanisms from stock for the weapon system.
+      Iterated from CAD model through physical build to competition-ready hardware.
     </div>
-    <div class="img-grid cols-2">
-      <div class="img-wrap tall">
-        <img src="images/battlebot_cad.jpeg" alt="Battle Bot SolidWorks CAD render" />
-        <div class="img-caption">SolidWorks CAD — transparent chassis view</div>
+    <div class="img-grid c2">
+      <div class="img-wrap h280" data-caption="SolidWorks CAD — transparent chassis view"
+           onclick="openLB(this)">
+        <img src="images/battlebot_cad.jpeg" alt="Battle Bot SolidWorks CAD" />
+        <div class="caption">SolidWorks CAD — transparent chassis view</div>
       </div>
-      <div class="img-wrap tall">
-        <img src="images/battlebot_build.jpeg" alt="Finished Battle Bot physical build" />
-        <div class="img-caption">Completed build — machined steel plows, 3D-printed chassis</div>
+      <div class="img-wrap h280" data-caption="Completed build — machined steel plows, 3D-printed chassis"
+           onclick="openLB(this)">
+        <img src="images/battlebot_build.jpeg" alt="Battle Bot physical build" />
+        <div class="caption">Completed build — machined steel plows</div>
       </div>
     </div>
     <div class="project-tags">
-      <span class="project-tag">SolidWorks CAD</span>
-      <span class="project-tag">Structural Topology Design</span>
-      <span class="project-tag">Machining</span>
-      <span class="project-tag">Prototyping</span>
-      <span class="project-tag">Material Selection</span>
+      <span class="ptag">SolidWorks CAD</span>
+      <span class="ptag">Structural Design</span>
+      <span class="ptag">Machining</span>
+      <span class="ptag">Prototyping</span>
+      <span class="ptag">Material Selection</span>
     </div>
   </div>
 
-  <!-- 3 · sEMG ────────────────────────────────────────────────────── -->
-  <div class="project">
-    <div class="project-header">
-      <span class="project-title">Surface EMG Sensor Prototype</span>
-      <span class="project-sub">Lu Research Group — UT Austin</span>
-      <span class="project-date">Jan – May 2022</span>
+  <!-- sEMG ─────────────────────────────────────────── -->
+  <div class="project fade-in">
+    <div class="project-top">
+      <div>
+        <div class="project-title">Surface EMG Sensor Prototype</div>
+        <div class="project-sub">Lu Research Group — UT Austin</div>
+      </div>
+      <div class="project-date">Jan – May 2022</div>
     </div>
     <div class="project-desc">
       Designed and built a surface EMG sensor from concept through functional hardware to detect
-      <strong>muscle voltage burst patterns</strong> during dynamic movement. Integrated analog
-      voltage detection circuitry and tested on human subjects during treadmill activity.
-      Processed signals in MATLAB via <strong>FFT and Median Frequency analysis</strong>
-      to track muscle fatigue in the frequency domain — targeting a real-time strain-risk wearable concept.
+      muscle voltage burst patterns during dynamic movement. Integrated analog voltage detection
+      circuitry and tested on human subjects during treadmill activity. Processed signals in MATLAB
+      via FFT and Median Frequency analysis to track muscle fatigue in the frequency domain — targeting
+      a real-time strain-risk wearable concept.
     </div>
-    <div class="img-grid cols-3">
-      <div class="img-wrap medium">
-        <img src="images/semg_sensor.jpeg" alt="sEMG sensor applied to forearm" />
-        <div class="img-caption">Sensor applied to forearm</div>
+    <div class="img-grid c3">
+      <div class="img-wrap h220" data-caption="Sensor applied to thigh during treadmill test"
+           onclick="openLB(this)">
+        <img src="images/semg_sensor.jpeg" alt="sEMG sensor applied to thigh" />
+        <div class="caption">Sensor applied to thigh</div>
       </div>
-      <div class="img-wrap medium">
-        <img src="images/semg_components.jpeg" alt="sEMG sensor components on workbench" />
-        <div class="img-caption">Sensor circuitry — component layout</div>
+      <div class="img-wrap h220" data-caption="Sensor circuit — component layout on workbench"
+           onclick="openLB(this)">
+        <img src="images/semg_components.jpeg" alt="sEMG components" />
+        <div class="caption">Sensor circuitry — component layout</div>
       </div>
-      <div class="img-wrap medium plot">
-        <img src="images/semg_plot.jpeg" alt="MATLAB Median Frequency vs Window plot" />
-        <div class="img-caption">Median frequency vs. time window (fatigue marker)</div>
+      <div class="img-wrap contain h220" data-caption="Median frequency vs. time window — fatigue marker (MATLAB)"
+           onclick="openLB(this)">
+        <img src="images/semg_plot.jpeg" alt="Median Frequency MATLAB plot" />
+        <div class="caption">Median frequency — fatigue marker</div>
       </div>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Sensor Design</span>
-      <span class="project-tag">Circuit Integration</span>
-      <span class="project-tag">MATLAB FFT</span>
-      <span class="project-tag">Signal Processing</span>
-      <span class="project-tag">Prototype Fabrication</span>
+      <span class="ptag">Sensor Design</span>
+      <span class="ptag">Circuit Integration</span>
+      <span class="ptag">MATLAB FFT</span>
+      <span class="ptag">Signal Processing</span>
+      <span class="ptag">Prototyping</span>
     </div>
   </div>
 
-  <!-- 4 · DUFFL ───────────────────────────────────────────────────── -->
-  <div class="project">
-    <div class="project-header">
-      <span class="project-title">Demand Forecasting &amp; Staffing Model</span>
-      <span class="project-sub">Duffl — Data Analytics</span>
-      <span class="project-date">Jan 2023 – May 2024</span>
+  <!-- DUFFL ────────────────────────────────────────── -->
+  <div class="project fade-in">
+    <div class="project-top">
+      <div>
+        <div class="project-title">Demand Forecasting &amp; Staffing Model</div>
+        <div class="project-sub">Duffl — Data Analytics</div>
+      </div>
+      <div class="project-date">Jan 2023 – May 2024</div>
     </div>
     <div class="project-desc">
-      Built a <strong>Python forecasting model</strong> predicting hourly order volume and required courier
-      staffing for a rapid-delivery startup. Identified that overloaded couriers (high orders-per-courier)
-      paradoxically correlated with <strong>lower late rates</strong> — denser routes are more efficient —
-      informing a scheduling policy change. Model was adopted by store leadership for weekly shift scheduling
-      and reduced late delivery rate <strong>30% after rollout</strong>.
+      Built a Python forecasting model predicting hourly order volume and required courier staffing
+      for a rapid-delivery startup. Identified that couriers handling more orders per shift had lower
+      late rates — denser routes are more efficient — a counter-intuitive finding that directly
+      informed a scheduling policy change. Model was adopted by store leadership and reduced late
+      delivery rate 30% after rollout.
     </div>
-    <div class="img-grid cols-2">
-      <div class="img-wrap plot" style="height:280px;">
-        <img src="images/duffl_scatter.png" alt="Late rate vs. orders per courier scatter plot" />
-        <div class="img-caption">Late rate vs. courier workload — key insight driving policy change</div>
+    <div class="img-grid c2">
+      <div class="img-wrap contain h280" data-caption="Late rate vs. courier workload — key insight driving policy change"
+           onclick="openLB(this)">
+        <img src="images/duffl_scatter.png" alt="Late rate vs orders per courier" />
+        <div class="caption">Late rate vs. courier workload</div>
       </div>
-      <div class="img-wrap plot" style="height:280px;">
-        <img src="images/duffl_forecast.png" alt="Predicted orders and courier staffing model" />
-        <div class="img-caption">Demand forecast + automated courier assignment (one week)</div>
+      <div class="img-wrap contain h280" data-caption="Demand forecast + automated courier assignment model (one week)"
+           onclick="openLB(this)">
+        <img src="images/duffl_forecast.png" alt="Demand forecast and staffing model" />
+        <div class="caption">Demand forecast + courier assignment model</div>
       </div>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Python</span>
-      <span class="project-tag">Pandas / NumPy</span>
-      <span class="project-tag">Predictive Modeling</span>
-      <span class="project-tag">Operations Optimization</span>
-      <span class="project-tag">Data Visualization</span>
+      <span class="ptag">Python</span>
+      <span class="ptag">Pandas / NumPy</span>
+      <span class="ptag">Predictive Modeling</span>
+      <span class="ptag">Operations Optimization</span>
     </div>
   </div>
 
-  <!-- 5 · LIDAR CAR ──────────────────────────────────────────────── -->
-  <div class="project">
-    <div class="project-header">
-      <span class="project-title">LIDAR Mapping Robot</span>
-      <span class="project-sub">UT Austin — Personal Build</span>
-      <span class="project-date">2022 – 2023</span>
+  <!-- LIDAR CAR ────────────────────────────────────── -->
+  <div class="project fade-in">
+    <div class="project-top">
+      <div>
+        <div class="project-title">LIDAR Mapping Robot</div>
+        <div class="project-sub">UT Austin — Personal Build</div>
+      </div>
+      <div class="project-date">2022 – 2023</div>
     </div>
     <div class="project-desc">
-      Designed and assembled a wheeled robot integrating a <strong>LIDAR sensor</strong> for environmental
-      mapping. 3-D printed chassis mounts electronics, motor controllers, and battery pack in a compact
-      frame. Demonstrates sensor integration, embedded systems wiring, and mechatronic system assembly.
+      Designed and assembled a wheeled robot integrating a LIDAR sensor for environmental mapping
+      and obstacle detection. 3D-printed chassis mounts a Raspberry Pi, motor controllers, and
+      battery pack in a compact frame. The video shows a preliminary wall-detection test — this
+      data collection phase fed into a machine learning model for autonomous navigation.
     </div>
-    <div class="img-grid cols-1">
-      <div class="img-wrap" style="height:320px; max-width:480px;">
-        <img src="images/lidar_car.jpeg" alt="LIDAR mapping robot" />
-        <div class="img-caption">3D-printed chassis with LIDAR, Raspberry Pi, motor controllers</div>
+    <div class="img-grid c2" style="margin-bottom:4px;">
+      <div class="img-wrap contain h260" data-caption="3D-printed chassis with LIDAR, Raspberry Pi, motor controllers"
+           onclick="openLB(this)">
+        <img src="images/lidar_car.jpeg" alt="LIDAR robot" />
+        <div class="caption">LIDAR robot — full assembly</div>
+      </div>
+      <div class="video-wrap" style="margin:0; border-radius:8px; overflow:hidden; height:260px;">
+        <video controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
+          <source src="images/lidar_driving.mov" type="video/mp4" />
+          <source src="images/lidar_driving.mov" type="video/quicktime" />
+        </video>
       </div>
     </div>
     <div class="project-tags">
-      <span class="project-tag">LIDAR Integration</span>
-      <span class="project-tag">3D Printing</span>
-      <span class="project-tag">Mechatronics</span>
-      <span class="project-tag">Embedded Systems</span>
+      <span class="ptag">LIDAR</span>
+      <span class="ptag">3D Printing</span>
+      <span class="ptag">Mechatronics</span>
+      <span class="ptag">Machine Learning</span>
+      <span class="ptag">Embedded Systems</span>
     </div>
   </div>
 
-  <!-- 6 · TINY HOUSE ─────────────────────────────────────────────── -->
-  <div class="project">
-    <div class="project-header">
-      <span class="project-title">Tiny House Build</span>
-      <span class="project-sub">Personal Project</span>
-      <span class="project-date">2021 – 2022</span>
+  <!-- TINY HOUSE ───────────────────────────────────── -->
+  <div class="project fade-in">
+    <div class="project-top">
+      <div>
+        <div class="project-title">Tiny House Build</div>
+        <div class="project-sub">Personal Project</div>
+      </div>
+      <div class="project-date">2021 – 2022</div>
     </div>
     <div class="project-desc">
-      Designed and built a fully functioning tiny house from the ground up — framing, electrical, plumbing,
-      and finish work. Fabricated a <strong>custom wooden staircase</strong> and interior built-ins.
-      Demonstrates large-scope hands-on construction, systems integration (electrical + plumbing),
-      and design-to-build ownership.
+      Designed and built a fully functioning tiny house from the ground up — framing, electrical,
+      plumbing, and finish work. Fabricated a custom wooden staircase and interior built-ins.
+      Demonstrates large-scope build ownership, systems integration, and design-to-finish execution.
     </div>
-    <div class="img-grid cols-1">
-      <div class="img-wrap" style="height:360px; max-width:540px;">
-        <img src="images/tiny_house.jpeg" alt="Tiny house finished interior with custom staircase" />
-        <div class="img-caption">Finished interior — custom staircase and built-ins</div>
+    <div class="img-grid c1">
+      <div class="img-wrap h360" data-caption="Finished interior — custom staircase and built-ins"
+           onclick="openLB(this)" style="max-width:560px;">
+        <img src="images/tiny_house.jpeg" alt="Tiny house interior" />
+        <div class="caption">Finished interior — custom staircase</div>
       </div>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Structural Design</span>
-      <span class="project-tag">Electrical Systems</span>
-      <span class="project-tag">Plumbing</span>
-      <span class="project-tag">Fabrication</span>
-      <span class="project-tag">Design-to-Build Ownership</span>
+      <span class="ptag">Structural Design</span>
+      <span class="ptag">Electrical</span>
+      <span class="ptag">Plumbing</span>
+      <span class="ptag">Fabrication</span>
     </div>
   </div>
 
-  <!-- 7 · STAGE BUILD ────────────────────────────────────────────── -->
-  <div class="project">
-    <div class="project-header">
-      <span class="project-title">32' × 40' Outdoor Stage</span>
-      <span class="project-sub">Personal Build</span>
-      <span class="project-date">2022</span>
+  <!-- STAGE ────────────────────────────────────────── -->
+  <div class="project fade-in">
+    <div class="project-top">
+      <div>
+        <div class="project-title">32' × 40' Outdoor Stage</div>
+        <div class="project-sub">Personal Build</div>
+      </div>
+      <div class="project-date">2022</div>
     </div>
     <div class="project-desc">
-      Designed and built a freestanding outdoor performance stage — 1,280 sq ft of structural deck on
-      post-and-beam framing with perimeter railings and integrated backwall. Structural layout designed
-      for distributed live loads and lateral wind loads.
+      Designed and built a freestanding outdoor performance stage — 1,280 sq ft of structural deck
+      on post-and-beam framing with perimeter railings and integrated backwall. Structural layout
+      designed for distributed live loads and lateral wind loads.
     </div>
-    <div class="img-grid cols-1">
-      <div class="img-wrap" style="height:340px; max-width:600px;">
-        <img src="images/stage_build.jpeg" alt="Completed 32x40 outdoor stage" />
-        <div class="img-caption">Completed stage — 32' × 40' post-and-beam structure</div>
+    <div class="img-grid c1">
+      <div class="img-wrap h340" data-caption="Completed stage — 32' × 40' post-and-beam structure"
+           onclick="openLB(this)" style="max-width:620px;">
+        <img src="images/stage_build.jpeg" alt="32x40 outdoor stage" />
+        <div class="caption">Completed stage — 32' × 40'</div>
       </div>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Structural Design</span>
-      <span class="project-tag">Load Analysis</span>
-      <span class="project-tag">Large-Scale Fabrication</span>
+      <span class="ptag">Structural Design</span>
+      <span class="ptag">Load Analysis</span>
+      <span class="ptag">Large-Scale Fabrication</span>
     </div>
   </div>
 
 </section>
 
 <!-- ── SKILLS ── -->
-<section id="skills">
-  <div class="section-label">Capabilities</div>
-  <div class="section-title">Technical Skills</div>
-  <div class="skills-grid">
+<section id="skills" style="background: linear-gradient(180deg, transparent 0%, rgba(77,158,255,0.02) 50%, transparent 100%);">
+  <div class="sec-header fade-in">
+    <span class="sec-num">02 —</span>
+    <h2 class="sec-title">Technical Skills</h2>
+  </div>
+  <div class="skills-grid fade-in">
     <div class="skill-card">
-      <h4>Simulation &amp; Analysis</h4>
+      <h4>Simulation &amp; FEA</h4>
       <ul>
         <li>MSC NASTRAN / PATRAN</li>
-        <li>FEA — static, fatigue, composites</li>
+        <li>Static &amp; fatigue FEA</li>
+        <li>Composite structures</li>
         <li>Classical hand calculations</li>
         <li>Vibration &amp; NVH analysis</li>
-        <li>Tolerance analysis</li>
       </ul>
     </div>
     <div class="skill-card">
       <h4>CAD &amp; Design</h4>
       <ul>
-        <li>CATIA (3D modeling, drawings)</li>
+        <li>CATIA V5</li>
         <li>SolidWorks</li>
         <li>Mechanism design</li>
         <li>GD&amp;T</li>
@@ -491,16 +688,17 @@
         <li>ASTM coupon test design</li>
         <li>Material qualification</li>
         <li>Accelerometer instrumentation</li>
-        <li>Test-stand design &amp; fabrication</li>
-        <li>Machining (steel, composites)</li>
+        <li>Test-stand design</li>
+        <li>Machining</li>
       </ul>
     </div>
     <div class="skill-card">
-      <h4>Programming &amp; Data</h4>
+      <h4>Programming</h4>
       <ul>
-        <li>Python — NumPy, Pandas, HDF5</li>
+        <li>Python — NumPy, Pandas</li>
+        <li>HDF5 data processing</li>
         <li>MATLAB — FFT, signal processing</li>
-        <li>Predictive modeling</li>
+        <li>Machine learning</li>
         <li>Git</li>
       </ul>
     </div>
@@ -510,8 +708,8 @@
         <li>Design reviews (PDR / CDR)</li>
         <li>FAA / EASA certification</li>
         <li>Requirements development</li>
-        <li>Substantiation report writing</li>
-        <li>Cross-functional hardware teams</li>
+        <li>Substantiation reports</li>
+        <li>Cross-functional teams</li>
       </ul>
     </div>
   </div>
@@ -519,24 +717,58 @@
 
 <!-- ── CONTACT ── -->
 <section id="contact">
-  <div class="section-label">Reach Out</div>
-  <div class="section-title">Contact</div>
-  <div class="contact-row">
-    <a class="contact-link" href="mailto:thanejohannsen@gmail.com">
-      <span class="contact-icon">✉</span> thanejohannsen@gmail.com
+  <div class="sec-header fade-in">
+    <span class="sec-num">03 —</span>
+    <h2 class="sec-title">Contact</h2>
+  </div>
+  <div class="contact-grid fade-in">
+    <a class="contact-card" href="mailto:thanejohannsen@gmail.com">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      thanejohannsen@gmail.com
     </a>
-    <a class="contact-link" href="https://linkedin.com/in/thane-johannsen" target="_blank">
-      <span class="contact-icon">in</span> linkedin.com/in/thane-johannsen
+    <a class="contact-card" href="https://linkedin.com/in/thane-johannsen" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin.com/in/thane-johannsen
     </a>
-    <a class="contact-link" href="tel:5129375696">
-      <span class="contact-icon">☎</span> (512) 937-5696
+    <a class="contact-card" href="tel:5129375696">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+      (512) 937-5696
+    </a>
+    <a class="contact-card" href="Thane_Johannsen_Resume.docx" download>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Resume
     </a>
   </div>
 </section>
 
 <footer>
-  Thane Johannsen · Austin, TX · Built with GitHub Pages
+  <span>© 2026 Thane Johannsen</span>
+  <span>Austin, TX</span>
 </footer>
 
+<script>
+  // ── Lightbox ──
+  function openLB(el) {
+    const img  = el.querySelector('img');
+    const cap  = el.dataset.caption || '';
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-img').alt = img.alt;
+    document.getElementById('lb-caption').textContent = cap;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLB(e) {
+    if (e && e.target === document.getElementById('lb-img')) return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+
+  // ── Fade-in on scroll ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
