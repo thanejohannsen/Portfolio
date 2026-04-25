@@ -3,27 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thane Johannsen — Engineering Portfolio</title>
+  <title>Thane Johannsen — Mechanical Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #080c14;
-      --card:     #0d1120;
-      --card2:    #111726;
-      --border:   #1c2238;
-      --border2:  #252d46;
-      --accent:   #4d9eff;
-      --accent-g: #3b82f6;
-      --orange:   #ff7c47;
-      --text:     #e8edf8;
-      --muted:    #68748f;
-      --muted2:   #9aa0b8;
-      --radius:   12px;
-      --max-w:    1080px;
+      --bg: #ffffff;
+      --bg2: #f7f8fa;
+      --text: #1a1d27;
+      --text2: #3d4250;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --max-w: 960px;
+      --radius: 8px;
     }
 
     html { scroll-behavior: smooth; }
@@ -31,637 +28,526 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', system-ui, sans-serif;
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.4;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
     }
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2.5rem;
       height: 60px;
-      background: rgba(8,12,20,0.85);
-      backdrop-filter: blur(16px) saturate(180%);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .nav-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem; font-weight: 500;
-      color: var(--accent); letter-spacing: 0.02em;
+    .nav-name {
+      font-size: 0.9rem; font-weight: 700; color: var(--text);
+      text-decoration: none; letter-spacing: -0.01em;
     }
+    .nav-name span { font-weight: 400; color: var(--muted); }
     nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
-    nav a { color: var(--muted2); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
-    nav a:hover { color: var(--text); }
-    .nav-resume {
-      padding: 0.35rem 0.9rem; border-radius: 6px;
-      border: 1px solid var(--border2); color: var(--text) !important;
-      font-size: 0.8rem !important; transition: border-color .2s, background .2s !important;
+    nav a {
+      color: var(--text2); text-decoration: none;
+      font-size: 0.88rem; font-weight: 500;
+      transition: color .2s;
     }
-    .nav-resume:hover { border-color: var(--accent) !important; background: rgba(77,158,255,0.08) !important; }
+    nav a:hover { color: var(--accent); }
 
     /* ── HERO ── */
     .hero {
-      position: relative; min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 8rem 2.5rem 5rem;
-      overflow: hidden;
-    }
-    /* mesh gradient background */
-    .hero::after {
-      content: '';
-      position: absolute; inset: 0; z-index: -1;
-      background:
-        radial-gradient(ellipse 70% 60% at 75% 40%, rgba(77,158,255,0.10) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 50% at 20% 70%, rgba(59,130,246,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 60% 85%, rgba(255,124,71,0.06) 0%, transparent 55%);
-    }
-    /* faint grid */
-    .hero-grid {
-      position: absolute; inset: 0; z-index: -1; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-    }
-    .hero-inner { max-width: var(--max-w); position: relative; }
-    .hero-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem; letter-spacing: 0.1em;
-      color: var(--accent); font-weight: 500;
-      margin-bottom: 1rem;
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 6rem 2rem 4rem;
     }
     .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 5rem);
-      font-weight: 800; line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.4rem;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+      color: var(--text);
     }
-    .hero h1 span { color: var(--accent); }
-    .hero-sub {
-      max-width: 580px; color: var(--muted2);
-      font-size: 1.05rem; font-weight: 400;
-      margin-bottom: 2.2rem; line-height: 1.7;
+    .hero-intro {
+      font-size: 1.15rem; line-height: 1.8;
+      color: var(--text2); max-width: 680px;
+      margin-bottom: 2rem;
     }
-    .hero-ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2.8rem; }
+    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.6rem 1.4rem; border-radius: 8px;
-      font-size: 0.88rem; font-weight: 600; text-decoration: none;
-      transition: all .2s; letter-spacing: 0.01em;
+      display: inline-block; padding: 0.6rem 1.4rem;
+      border-radius: 6px; font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; transition: all .2s;
     }
     .btn-primary {
-      background: var(--accent); color: #fff;
-      box-shadow: 0 0 20px rgba(77,158,255,0.3);
+      background: var(--text); color: #fff;
     }
-    .btn-primary:hover { background: #6ab0ff; box-shadow: 0 0 28px rgba(77,158,255,0.45); }
-    .btn-ghost {
-      border: 1px solid var(--border2); color: var(--text);
-      background: rgba(255,255,255,0.03);
+    .btn-primary:hover { background: #2d3040; }
+    .btn-outline {
+      border: 1.5px solid var(--border); color: var(--text2);
+      background: transparent;
     }
-    .btn-ghost:hover { border-color: var(--accent); background: rgba(77,158,255,0.07); }
+    .btn-outline:hover { border-color: var(--text); color: var(--text); }
 
-    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .htag {
-      font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 100px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      color: var(--muted2);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    /* scroll indicator */
-    .scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 2.5rem;
-      display: flex; align-items: center; gap: 0.5rem;
-      font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em;
-      font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
-    }
-    .scroll-line {
-      width: 32px; height: 1px; background: var(--muted);
-      transition: width .3s;
-    }
-    .scroll-hint:hover .scroll-line { width: 56px; }
-
-    /* ── SECTION ── */
+    /* ── SECTIONS ── */
     section {
       max-width: var(--max-w); margin: 0 auto;
-      padding: 5rem 2.5rem;
+      padding: 3.5rem 2rem;
     }
-    .sec-header {
-      display: flex; align-items: baseline; gap: 1rem;
-      margin-bottom: 3rem;
-      padding-bottom: 1.2rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .sec-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem; color: var(--accent); font-weight: 500;
-      letter-spacing: 0.1em;
+    .section-divider {
+      border: none; border-top: 1px solid var(--border);
+      max-width: var(--max-w); margin: 0 auto;
     }
     .sec-title {
-      font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em;
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      color: var(--text);
     }
 
-    /* ── PROJECT CARD ── */
+    /* ── PROJECT CARDS ── */
     .project {
-      background: var(--card);
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       margin-bottom: 2rem;
       overflow: hidden;
-      transition: border-color .3s, box-shadow .3s;
+      transition: box-shadow .3s, border-color .3s;
     }
     .project:hover {
-      border-color: var(--border2);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(77,158,255,0.06);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      border-color: #d1d5db;
     }
-    .project-top {
-      padding: 1.6rem 1.8rem 0.5rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.5rem;
-      align-items: start;
+    .project-head {
+      padding: 1.5rem 1.8rem 0.4rem;
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem;
     }
-    .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.15rem; }
-    .project-sub { font-size: 0.82rem; color: var(--muted2); }
+    .project-title {
+      font-size: 1.05rem; font-weight: 700; color: var(--text);
+    }
+    .project-sub {
+      font-size: 0.85rem; color: var(--muted);
+    }
     .project-date {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem; color: var(--muted); white-space: nowrap;
-      padding-top: 0.2rem;
+      margin-left: auto; font-size: 0.82rem; color: var(--muted);
+      white-space: nowrap;
     }
-    .project-desc { padding: 0.6rem 1.8rem 1rem; color: var(--muted2); font-size: 0.92rem; }
-    .project-tags { padding: 0 1.8rem 1.6rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .ptag {
-      font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 100px;
-      background: rgba(77,158,255,0.07);
-      border: 1px solid rgba(77,158,255,0.15);
-      color: #7ab4f5;
-      font-family: 'JetBrains Mono', monospace;
+    .project-body {
+      padding: 0.5rem 1.8rem 1rem;
+      color: var(--text2); font-size: 0.92rem; line-height: 1.75;
     }
 
-    /* ── IMAGE GRIDS ── */
-    .img-grid { display: grid; gap: 4px; padding: 0 1.8rem 1rem; }
+    /* ── IMAGES ── */
+    .img-grid {
+      display: grid; gap: 6px;
+      padding: 0 1.8rem 1rem;
+    }
     .img-grid.c1 { grid-template-columns: 1fr; }
     .img-grid.c2 { grid-template-columns: 1fr 1fr; }
     .img-grid.c3 { grid-template-columns: 1fr 1fr 1fr; }
-    .img-grid.c4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
     .img-wrap {
       position: relative; overflow: hidden;
-      border-radius: 8px; background: var(--card2);
-      cursor: zoom-in;
+      border-radius: 6px; background: #f3f4f6;
+      cursor: pointer;
     }
     .img-wrap img {
       width: 100%; height: 100%;
       object-fit: cover; display: block;
-      transition: transform .4s ease, filter .3s;
+      transition: transform .35s ease;
     }
-    .img-wrap.contain img { object-fit: contain; background: #fff; padding: 8px; }
-    .img-wrap:hover img { transform: scale(1.04); filter: brightness(1.05); }
-    .img-wrap .caption {
+    .img-wrap.contain img {
+      object-fit: contain; background: #fff; padding: 6px;
+    }
+    .img-wrap:hover img { transform: scale(1.03); }
+    .img-wrap .cap {
       position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 1.2rem 0.8rem 0.55rem;
-      background: linear-gradient(transparent, rgba(5,8,16,0.85));
-      font-size: 0.7rem; color: rgba(220,228,255,0.85);
+      padding: 1.2rem 0.8rem 0.5rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.55));
+      font-size: 0.72rem; color: #fff;
       opacity: 0; transition: opacity .25s;
-      pointer-events: none;
     }
-    .img-wrap:hover .caption { opacity: 1; }
+    .img-wrap:hover .cap { opacity: 1; }
 
-    /* height utilities */
-    .h160 { height: 160px; }
-    .h200 { height: 200px; }
-    .h240 { height: 240px; }
-    .h280 { height: 280px; }
-    .h320 { height: 320px; }
-    .h360 { height: 360px; }
+    .h180 { height: 180px; }
+    .h220 { height: 220px; }
+    .h260 { height: 260px; }
+    .h300 { height: 300px; }
+    .h340 { height: 340px; }
 
     /* ── VIDEO ── */
-    .video-wrap {
-      border-radius: 8px; overflow: hidden;
-      background: #000; margin: 0 1.8rem 1rem;
+    .vid-cell {
+      border-radius: 6px; overflow: hidden;
+      background: #000; height: 260px;
     }
-    .video-wrap video { width: 100%; display: block; max-height: 420px; }
+    .vid-cell video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── TAGS ── */
+    .tag-row { padding: 0 1.8rem 1.4rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 100px;
+      background: var(--accent-light); color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+    }
+    .skill-card {
+      background: var(--bg2); border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+    }
+    .skill-card h4 {
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .skill-card li {
+      list-style: none; font-size: 0.85rem; color: var(--text2);
+      padding: 0.15rem 0;
+    }
+
+    /* ── CONTACT ── */
+    .contact-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .contact-card {
+      display: flex; align-items: center; gap: 0.6rem;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 0.75rem 1.2rem;
+      color: var(--text); text-decoration: none; font-size: 0.88rem;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .contact-card:hover {
+      border-color: var(--accent); box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 2rem;
+      font-size: 0.8rem; color: var(--muted);
+      text-align: center;
+    }
 
     /* ── LIGHTBOX ── */
     #lightbox {
       display: none; position: fixed; inset: 0; z-index: 1000;
-      background: rgba(4,6,12,0.96);
-      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.85);
       align-items: center; justify-content: center;
       cursor: zoom-out;
     }
     #lightbox.open { display: flex; }
     #lightbox img {
       max-width: 92vw; max-height: 90vh;
-      object-fit: contain; border-radius: 8px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+      object-fit: contain; border-radius: 6px;
+      box-shadow: 0 16px 64px rgba(0,0,0,0.4);
       cursor: default;
     }
     #lb-close {
-      position: fixed; top: 1.2rem; right: 1.5rem;
-      font-size: 1.6rem; color: var(--muted2); cursor: pointer; z-index: 1001;
-      background: none; border: none; transition: color .2s;
+      position: fixed; top: 1rem; right: 1.5rem;
+      font-size: 2rem; color: #fff; background: none; border: none;
+      cursor: pointer; opacity: 0.7; transition: opacity .2s;
     }
-    #lb-close:hover { color: var(--text); }
+    #lb-close:hover { opacity: 1; }
     #lb-caption {
       position: fixed; bottom: 1.5rem; left: 0; right: 0;
-      text-align: center; font-size: 0.8rem; color: var(--muted2);
-      pointer-events: none;
+      text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.8);
     }
 
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 1rem;
-    }
-    .skill-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.2rem 1.4rem;
-      transition: border-color .2s;
-    }
-    .skill-card:hover { border-color: var(--border2); }
-    .skill-card h4 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem; font-weight: 500;
-      color: var(--accent); margin-bottom: 0.7rem;
-      letter-spacing: 0.06em; text-transform: uppercase;
-    }
-    .skill-card li { list-style: none; font-size: 0.82rem; color: var(--muted2); padding: 0.18rem 0; }
+    /* ── FADE IN ── */
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .fade.vis { opacity: 1; transform: none; }
 
-    /* ── CONTACT ── */
-    .contact-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-    .contact-card {
-      display: flex; align-items: center; gap: 0.7rem;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 0.9rem 1.4rem;
-      color: var(--text); text-decoration: none;
-      font-size: 0.88rem; font-weight: 500;
-      transition: border-color .2s, background .2s;
-    }
-    .contact-card:hover { border-color: var(--accent); background: rgba(77,158,255,0.06); }
-    .contact-card svg { opacity: 0.7; flex-shrink: 0; }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 0.75rem; color: var(--muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    /* ── FADE-IN ANIMATION ── */
-    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-    .fade-in.visible { opacity: 1; transform: none; }
-
-    @media (max-width: 680px) {
-      .img-grid.c4, .img-grid.c3 { grid-template-columns: 1fr 1fr; }
-      .img-grid.c2 { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .hero h1 { font-size: 2rem; }
+      .img-grid.c3, .img-grid.c2 { grid-template-columns: 1fr; }
       nav ul { gap: 1rem; }
-      .nav-resume { display: none; }
+      .nav-name span { display: none; }
+      section { padding: 2.5rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── LIGHTBOX ── -->
+<!-- lightbox -->
 <div id="lightbox" onclick="closeLB(event)">
-  <button id="lb-close" onclick="closeLB()">✕</button>
+  <button id="lb-close" onclick="closeLB()">&times;</button>
   <img id="lb-img" src="" alt="" />
   <div id="lb-caption"></div>
 </div>
 
-<!-- ── NAV ── -->
+<!-- nav -->
 <nav>
-  <span class="nav-logo">thane.j</span>
+  <a class="nav-name" href="/">Thane Johannsen <span>— Mechanical Engineer</span></a>
   <ul>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Portfolio</a></li>
+    <li><a href="resume.html">Resume</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a class="nav-resume btn-ghost btn" href="Thane_Johannsen_Resume.docx" download>Resume ↓</a></li>
   </ul>
 </nav>
 
-<!-- ── HERO ── -->
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-inner">
-    <div class="hero-eyebrow">// mechanical engineer</div>
-    <h1>Thane<br /><span>Johannsen</span></h1>
-    <p class="hero-sub">
-      FEA · structural analysis · material qualification · Python automation · hands-on prototyping.
-      UT Austin ME '24 — 3.89 GPA.
-    </p>
-    <div class="hero-ctas">
-      <a class="btn btn-primary" href="Thane_Johannsen_Resume.docx" download>Download Resume</a>
-      <a class="btn btn-ghost" href="https://linkedin.com/in/thane-johannsen" target="_blank">LinkedIn ↗</a>
-    </div>
-    <div class="hero-tags">
-      <span class="htag">NASTRAN / PATRAN</span>
-      <span class="htag">CATIA</span>
-      <span class="htag">Python</span>
-      <span class="htag">MATLAB</span>
-      <span class="htag">FEA</span>
-      <span class="htag">Material Qualification</span>
-      <span class="htag">Vibration Analysis</span>
-      <span class="htag">Machining</span>
-    </div>
-  </div>
-  <div class="scroll-hint">
-    <span class="scroll-line"></span>
-    <span>scroll</span>
+<!-- hero -->
+<div class="hero fade">
+  <h1>Hi, I'm Thane Johannsen.</h1>
+  <p class="hero-intro">
+    I'm a mechanical engineer with a passion for hands-on building, structural analysis,
+    and writing code to optimize engineering workflows. I graduated from UT Austin in 2024
+    with a degree in Mechanical Engineering, and I've spent the past two years doing structural
+    FEA, material qualification, and Python automation on certified aerospace hardware. When I'm
+    not running NASTRAN models, I'm usually building something — robots, sensors, stages, tiny houses.
+  </p>
+  <div class="hero-links">
+    <a class="btn btn-primary" href="resume.html">View Resume</a>
+    <a class="btn btn-outline" href="https://linkedin.com/in/thane-johannsen" target="_blank">LinkedIn</a>
   </div>
 </div>
 
-<!-- ── PROJECTS ── -->
-<section id="projects">
-  <div class="sec-header fade-in">
-    <span class="sec-num">01 —</span>
-    <h2 class="sec-title">Projects &amp; Research</h2>
-  </div>
+<hr class="section-divider" />
 
-  <!-- CAPSTONE ─────────────────────────────────────── -->
-  <div class="project fade-in">
-    <div class="project-top">
-      <div>
-        <div class="project-title">Structural Dynamics Characterization</div>
-        <div class="project-sub">UT Austin Capstone</div>
-      </div>
-      <div class="project-date">Jan – May 2024</div>
+<!-- projects -->
+<section id="projects">
+  <h2 class="sec-title fade">Portfolio</h2>
+
+  <!-- CAPSTONE -->
+  <div class="project fade">
+    <div class="project-head">
+      <span class="project-title">Structural Dynamics Characterization</span>
+      <span class="project-sub">UT Austin Capstone</span>
+      <span class="project-date">Jan – May 2024</span>
     </div>
-    <div class="project-desc">
-      Applied Materials tests robotic arms on external test stands before deploying them in production
-      semiconductor machines — but for results to be accurate, the test stand must replicate the
-      vibrational characteristics of the real machine. This project developed a process to extract
-      damping ratios and spring constants from free-response accelerometer data, enabling test stand
-      designs to be tuned to match any target structure.
-      We applied the methodology to a lab table and a 3D printer carriage as test objects — instrumented
-      with PCB Piezotronics accelerometers, acquired with a Zoom F8 DAQ, and modeled in MATLAB. The result
-      is a replicable characterization workflow that generalizes to any structure.
+    <div class="project-body">
+      Applied Materials tests robotic arms on external test stands before deploying them inside
+      production semiconductor machines. For those test results to be accurate, the test stand
+      must replicate the vibrational characteristics of the real machine. This project developed
+      a process to do exactly that: extract damping ratios and spring constants from free-response
+      accelerometer data so a compliant test stand can be designed to match any target structure.
+      We applied the methodology to a lab table and a 3D printer carriage as test objects,
+      instrumented with PCB Piezotronics accelerometers, acquired data via a Zoom F8 DAQ,
+      and modeled the structural dynamics in MATLAB.
     </div>
-    <div class="img-grid c3" style="margin-bottom:4px;">
-      <div class="img-wrap h200" data-caption="3D printer on vibration isolation table"
-           onclick="openLB(this)">
+    <div class="img-grid c3" style="margin-bottom:6px;">
+      <div class="img-wrap h220" data-cap="3D printer on vibration isolation table" onclick="openLB(this)">
         <img src="images/capstone_isolation.jpeg" alt="3D printer on isolation table" />
-        <div class="caption">3D printer on isolation table</div>
+        <div class="cap">3D printer on isolation table</div>
       </div>
-      <div class="img-wrap h200" data-caption="PCB Piezotronics accelerometer (red arrow) on tool head"
-           onclick="openLB(this)">
+      <div class="img-wrap h220" data-cap="Accelerometer mounted on tool head" onclick="openLB(this)">
         <img src="images/capstone_accelerometer.jpeg" alt="Accelerometer on tool head" />
-        <div class="caption">Accelerometer on tool head</div>
+        <div class="cap">Accelerometer on tool head</div>
       </div>
-      <div class="img-wrap h200" data-caption="Zoom F8 multi-track DAQ + PCB Piezotronics signal conditioner"
-           onclick="openLB(this)">
-        <img src="images/capstone_daq.jpeg" alt="Zoom F8 + PCB Piezotronics DAQ" />
-        <div class="caption">Zoom F8 + PCB Piezotronics DAQ</div>
+      <div class="img-wrap h220" data-cap="Zoom F8 + PCB Piezotronics DAQ" onclick="openLB(this)">
+        <img src="images/capstone_daq.jpeg" alt="Zoom F8 DAQ" />
+        <div class="cap">Zoom F8 + PCB Piezotronics DAQ</div>
       </div>
     </div>
     <div class="img-grid c1">
-      <div class="img-wrap contain h280" data-caption="Free response — tool head acceleration decay (MATLAB)"
-           onclick="openLB(this)">
-        <img src="images/capstone_freeresponse.png" alt="Free Response for Tool Head — MATLAB" />
-        <div class="caption">Free response — tool head acceleration decay</div>
+      <div class="img-wrap contain h300" data-cap="Free response — tool head acceleration decay (MATLAB)" onclick="openLB(this)">
+        <img src="images/capstone_freeresponse.png" alt="Free response MATLAB plot" />
+        <div class="cap">Free response — tool head acceleration decay</div>
       </div>
     </div>
-    <div class="project-tags">
-      <span class="ptag">Structural Dynamics</span>
-      <span class="ptag">Accelerometer Instrumentation</span>
-      <span class="ptag">MATLAB System ID</span>
-      <span class="ptag">DAQ</span>
-      <span class="ptag">Vibration Analysis</span>
+    <div class="tag-row">
+      <span class="tag">Structural Dynamics</span>
+      <span class="tag">Accelerometers</span>
+      <span class="tag">MATLAB</span>
+      <span class="tag">DAQ</span>
+      <span class="tag">Vibration Analysis</span>
     </div>
   </div>
 
-  <!-- BATTLE BOT ───────────────────────────────────── -->
-  <div class="project fade-in">
-    <div class="project-top">
-      <div>
-        <div class="project-title">Combat Robot</div>
-        <div class="project-sub">UT Austin — ME 366J</div>
-      </div>
-      <div class="project-date">Aug – Dec 2023</div>
+  <!-- BATTLE BOT -->
+  <div class="project fade">
+    <div class="project-head">
+      <span class="project-title">Combat Robot</span>
+      <span class="project-sub">UT Austin — ME 366J</span>
+      <span class="project-date">Aug – Dec 2023</span>
     </div>
-    <div class="project-desc">
-      Designed, fabricated, and competed with a combat robot under strict weight and budget constraints.
-      Owned the chassis structural design — truss topology selected for stiffness-to-weight, 3D-printed
-      body in low-density polymer to absorb impact. Machined steel plow mechanisms from stock for the weapon system.
+    <div class="project-body">
+      Designed, fabricated, and competed with a combat robot under strict weight and budget
+      constraints. Owned the chassis structural design — truss topology selected for stiffness-to-weight,
+      3D-printed body in low-density polymer to absorb impact. Machined steel plow mechanisms from stock.
       Iterated from CAD model through physical build to competition-ready hardware.
     </div>
     <div class="img-grid c2">
-      <div class="img-wrap h280" data-caption="SolidWorks CAD — transparent chassis view"
-           onclick="openLB(this)">
-        <img src="images/battlebot_cad.jpeg" alt="Battle Bot SolidWorks CAD" />
-        <div class="caption">SolidWorks CAD — transparent chassis view</div>
+      <div class="img-wrap h260" data-cap="SolidWorks CAD — transparent chassis view" onclick="openLB(this)">
+        <img src="images/battlebot_cad.jpeg" alt="Battle Bot CAD" />
+        <div class="cap">SolidWorks CAD — transparent chassis</div>
       </div>
-      <div class="img-wrap h280" data-caption="Completed build — machined steel plows, 3D-printed chassis"
-           onclick="openLB(this)">
-        <img src="images/battlebot_build.jpeg" alt="Battle Bot physical build" />
-        <div class="caption">Completed build — machined steel plows</div>
+      <div class="img-wrap h260" data-cap="Completed build — machined steel plows, 3D-printed chassis" onclick="openLB(this)">
+        <img src="images/battlebot_build.jpeg" alt="Battle Bot build" />
+        <div class="cap">Completed build</div>
       </div>
     </div>
-    <div class="project-tags">
-      <span class="ptag">SolidWorks CAD</span>
-      <span class="ptag">Structural Design</span>
-      <span class="ptag">Machining</span>
-      <span class="ptag">Prototyping</span>
-      <span class="ptag">Material Selection</span>
+    <div class="tag-row">
+      <span class="tag">SolidWorks</span>
+      <span class="tag">Structural Design</span>
+      <span class="tag">Machining</span>
+      <span class="tag">Prototyping</span>
+      <span class="tag">Material Selection</span>
     </div>
   </div>
 
-  <!-- sEMG ─────────────────────────────────────────── -->
-  <div class="project fade-in">
-    <div class="project-top">
-      <div>
-        <div class="project-title">Surface EMG Sensor Prototype</div>
-        <div class="project-sub">Lu Research Group — UT Austin</div>
-      </div>
-      <div class="project-date">Jan – May 2022</div>
+  <!-- sEMG -->
+  <div class="project fade">
+    <div class="project-head">
+      <span class="project-title">Surface EMG Sensor Prototype</span>
+      <span class="project-sub">Lu Research Group — UT Austin</span>
+      <span class="project-date">Jan – May 2022</span>
     </div>
-    <div class="project-desc">
+    <div class="project-body">
       Designed and built a surface EMG sensor from concept through functional hardware to detect
       muscle voltage burst patterns during dynamic movement. Integrated analog voltage detection
       circuitry and tested on human subjects during treadmill activity. Processed signals in MATLAB
-      via FFT and Median Frequency analysis to track muscle fatigue in the frequency domain — targeting
+      via FFT and Median Frequency analysis to track muscle fatigue in the frequency domain, targeting
       a real-time strain-risk wearable concept.
     </div>
     <div class="img-grid c3">
-      <div class="img-wrap h220" data-caption="Sensor applied to thigh during treadmill test"
-           onclick="openLB(this)">
-        <img src="images/semg_sensor.jpeg" alt="sEMG sensor applied to thigh" />
-        <div class="caption">Sensor applied to thigh</div>
+      <div class="img-wrap h220" data-cap="Sensor applied to thigh during treadmill test" onclick="openLB(this)">
+        <img src="images/semg_sensor.jpeg" alt="sEMG sensor on thigh" />
+        <div class="cap">Sensor applied to thigh</div>
       </div>
-      <div class="img-wrap h220" data-caption="Sensor circuit — component layout on workbench"
-           onclick="openLB(this)">
+      <div class="img-wrap h220" data-cap="Sensor circuit components" onclick="openLB(this)">
         <img src="images/semg_components.jpeg" alt="sEMG components" />
-        <div class="caption">Sensor circuitry — component layout</div>
+        <div class="cap">Sensor circuitry</div>
       </div>
-      <div class="img-wrap contain h220" data-caption="Median frequency vs. time window — fatigue marker (MATLAB)"
-           onclick="openLB(this)">
-        <img src="images/semg_plot.jpeg" alt="Median Frequency MATLAB plot" />
-        <div class="caption">Median frequency — fatigue marker</div>
+      <div class="img-wrap contain h220" data-cap="Median frequency vs. time window — fatigue marker (MATLAB)" onclick="openLB(this)">
+        <img src="images/semg_plot.jpeg" alt="MATLAB Median Frequency" />
+        <div class="cap">Median frequency — fatigue marker</div>
       </div>
     </div>
-    <div class="project-tags">
-      <span class="ptag">Sensor Design</span>
-      <span class="ptag">Circuit Integration</span>
-      <span class="ptag">MATLAB FFT</span>
-      <span class="ptag">Signal Processing</span>
-      <span class="ptag">Prototyping</span>
+    <div class="tag-row">
+      <span class="tag">Sensor Design</span>
+      <span class="tag">Circuits</span>
+      <span class="tag">MATLAB FFT</span>
+      <span class="tag">Signal Processing</span>
+      <span class="tag">Prototyping</span>
     </div>
   </div>
 
-  <!-- DUFFL ────────────────────────────────────────── -->
-  <div class="project fade-in">
-    <div class="project-top">
-      <div>
-        <div class="project-title">Demand Forecasting &amp; Staffing Model</div>
-        <div class="project-sub">Duffl — Data Analytics</div>
-      </div>
-      <div class="project-date">Jan 2023 – May 2024</div>
+  <!-- DUFFL -->
+  <div class="project fade">
+    <div class="project-head">
+      <span class="project-title">Demand Forecasting &amp; Staffing Model</span>
+      <span class="project-sub">Duffl</span>
+      <span class="project-date">Jan 2023 – May 2024</span>
     </div>
-    <div class="project-desc">
+    <div class="project-body">
       Built a Python forecasting model predicting hourly order volume and required courier staffing
       for a rapid-delivery startup. Identified that couriers handling more orders per shift had lower
-      late rates — denser routes are more efficient — a counter-intuitive finding that directly
-      informed a scheduling policy change. Model was adopted by store leadership and reduced late
-      delivery rate 30% after rollout.
+      late rates — denser routes are more efficient — a counter-intuitive finding that drove a
+      scheduling policy change. The model was adopted by store leadership and reduced late delivery
+      rate 30% after rollout.
     </div>
     <div class="img-grid c2">
-      <div class="img-wrap contain h280" data-caption="Late rate vs. courier workload — key insight driving policy change"
-           onclick="openLB(this)">
+      <div class="img-wrap contain h260" data-cap="Late rate vs. courier workload" onclick="openLB(this)">
         <img src="images/duffl_scatter.png" alt="Late rate vs orders per courier" />
-        <div class="caption">Late rate vs. courier workload</div>
+        <div class="cap">Late rate vs. courier workload</div>
       </div>
-      <div class="img-wrap contain h280" data-caption="Demand forecast + automated courier assignment model (one week)"
-           onclick="openLB(this)">
-        <img src="images/duffl_forecast.png" alt="Demand forecast and staffing model" />
-        <div class="caption">Demand forecast + courier assignment model</div>
+      <div class="img-wrap contain h260" data-cap="Demand forecast + courier staffing model" onclick="openLB(this)">
+        <img src="images/duffl_forecast.png" alt="Demand forecast" />
+        <div class="cap">Demand forecast + courier assignment</div>
       </div>
     </div>
-    <div class="project-tags">
-      <span class="ptag">Python</span>
-      <span class="ptag">Pandas / NumPy</span>
-      <span class="ptag">Predictive Modeling</span>
-      <span class="ptag">Operations Optimization</span>
+    <div class="tag-row">
+      <span class="tag">Python</span>
+      <span class="tag">Pandas</span>
+      <span class="tag">Predictive Modeling</span>
+      <span class="tag">Operations</span>
     </div>
   </div>
 
-  <!-- LIDAR CAR ────────────────────────────────────── -->
-  <div class="project fade-in">
-    <div class="project-top">
-      <div>
-        <div class="project-title">LIDAR Mapping Robot</div>
-        <div class="project-sub">UT Austin — Personal Build</div>
-      </div>
-      <div class="project-date">2022 – 2023</div>
+  <!-- LIDAR -->
+  <div class="project fade">
+    <div class="project-head">
+      <span class="project-title">LIDAR Mapping Robot</span>
+      <span class="project-sub">UT Austin</span>
+      <span class="project-date">2022 – 2023</span>
     </div>
-    <div class="project-desc">
+    <div class="project-body">
       Designed and assembled a wheeled robot integrating a LIDAR sensor for environmental mapping
-      and obstacle detection. 3D-printed chassis mounts a Raspberry Pi, motor controllers, and
-      battery pack in a compact frame. The video shows a preliminary wall-detection test — this
-      data collection phase fed into a machine learning model for autonomous navigation.
+      and obstacle detection. 3D-printed chassis houses a Raspberry Pi, motor controllers, and battery
+      pack. The video shows a preliminary wall-detection test — this data collection phase fed into a
+      machine learning model for autonomous navigation.
     </div>
-    <div class="img-grid c2" style="margin-bottom:4px;">
-      <div class="img-wrap contain h260" data-caption="3D-printed chassis with LIDAR, Raspberry Pi, motor controllers"
-           onclick="openLB(this)">
+    <div class="img-grid c2">
+      <div class="img-wrap contain h260" data-cap="LIDAR robot — full assembly" onclick="openLB(this)">
         <img src="images/lidar_car.jpeg" alt="LIDAR robot" />
-        <div class="caption">LIDAR robot — full assembly</div>
+        <div class="cap">LIDAR robot — full assembly</div>
       </div>
-      <div class="video-wrap" style="margin:0; border-radius:8px; overflow:hidden; height:260px;">
-        <video controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
+      <div class="vid-cell">
+        <video controls preload="metadata">
           <source src="images/lidar_driving.mov" type="video/mp4" />
           <source src="images/lidar_driving.mov" type="video/quicktime" />
         </video>
       </div>
     </div>
-    <div class="project-tags">
-      <span class="ptag">LIDAR</span>
-      <span class="ptag">3D Printing</span>
-      <span class="ptag">Mechatronics</span>
-      <span class="ptag">Machine Learning</span>
-      <span class="ptag">Embedded Systems</span>
+    <div class="tag-row">
+      <span class="tag">LIDAR</span>
+      <span class="tag">3D Printing</span>
+      <span class="tag">Mechatronics</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">Embedded Systems</span>
     </div>
   </div>
 
-  <!-- TINY HOUSE ───────────────────────────────────── -->
-  <div class="project fade-in">
-    <div class="project-top">
-      <div>
-        <div class="project-title">Tiny House Build</div>
-        <div class="project-sub">Personal Project</div>
-      </div>
-      <div class="project-date">2021 – 2022</div>
+  <!-- TINY HOUSE -->
+  <div class="project fade">
+    <div class="project-head">
+      <span class="project-title">Tiny House Build</span>
+      <span class="project-sub">Personal Project</span>
+      <span class="project-date">2021 – 2022</span>
     </div>
-    <div class="project-desc">
+    <div class="project-body">
       Designed and built a fully functioning tiny house from the ground up — framing, electrical,
       plumbing, and finish work. Fabricated a custom wooden staircase and interior built-ins.
-      Demonstrates large-scope build ownership, systems integration, and design-to-finish execution.
     </div>
     <div class="img-grid c1">
-      <div class="img-wrap h360" data-caption="Finished interior — custom staircase and built-ins"
-           onclick="openLB(this)" style="max-width:560px;">
+      <div class="img-wrap h340" data-cap="Finished interior — custom staircase and built-ins" onclick="openLB(this)" style="max-width:520px;">
         <img src="images/tiny_house.jpeg" alt="Tiny house interior" />
-        <div class="caption">Finished interior — custom staircase</div>
+        <div class="cap">Finished interior — custom staircase</div>
       </div>
     </div>
-    <div class="project-tags">
-      <span class="ptag">Structural Design</span>
-      <span class="ptag">Electrical</span>
-      <span class="ptag">Plumbing</span>
-      <span class="ptag">Fabrication</span>
+    <div class="tag-row">
+      <span class="tag">Structural Design</span>
+      <span class="tag">Electrical</span>
+      <span class="tag">Plumbing</span>
+      <span class="tag">Fabrication</span>
     </div>
   </div>
 
-  <!-- STAGE ────────────────────────────────────────── -->
-  <div class="project fade-in">
-    <div class="project-top">
-      <div>
-        <div class="project-title">32' × 40' Outdoor Stage</div>
-        <div class="project-sub">Personal Build</div>
-      </div>
-      <div class="project-date">2022</div>
+  <!-- STAGE -->
+  <div class="project fade">
+    <div class="project-head">
+      <span class="project-title">32' x 40' Outdoor Stage</span>
+      <span class="project-sub">Personal Build</span>
+      <span class="project-date">2022</span>
     </div>
-    <div class="project-desc">
+    <div class="project-body">
       Designed and built a freestanding outdoor performance stage — 1,280 sq ft of structural deck
-      on post-and-beam framing with perimeter railings and integrated backwall. Structural layout
-      designed for distributed live loads and lateral wind loads.
+      on post-and-beam framing with perimeter railings and integrated backwall.
     </div>
     <div class="img-grid c1">
-      <div class="img-wrap h340" data-caption="Completed stage — 32' × 40' post-and-beam structure"
-           onclick="openLB(this)" style="max-width:620px;">
-        <img src="images/stage_build.jpeg" alt="32x40 outdoor stage" />
-        <div class="caption">Completed stage — 32' × 40'</div>
+      <div class="img-wrap h340" data-cap="Completed stage — 32' x 40' post-and-beam structure" onclick="openLB(this)" style="max-width:580px;">
+        <img src="images/stage_build.jpeg" alt="Outdoor stage" />
+        <div class="cap">Completed stage — 32' x 40'</div>
       </div>
     </div>
-    <div class="project-tags">
-      <span class="ptag">Structural Design</span>
-      <span class="ptag">Load Analysis</span>
-      <span class="ptag">Large-Scale Fabrication</span>
+    <div class="tag-row">
+      <span class="tag">Structural Design</span>
+      <span class="tag">Load Analysis</span>
+      <span class="tag">Large-Scale Fabrication</span>
     </div>
   </div>
-
 </section>
 
-<!-- ── SKILLS ── -->
-<section id="skills" style="background: linear-gradient(180deg, transparent 0%, rgba(77,158,255,0.02) 50%, transparent 100%);">
-  <div class="sec-header fade-in">
-    <span class="sec-num">02 —</span>
-    <h2 class="sec-title">Technical Skills</h2>
-  </div>
-  <div class="skills-grid fade-in">
+<hr class="section-divider" />
+
+<!-- skills -->
+<section id="skills">
+  <h2 class="sec-title fade">Skills</h2>
+  <div class="skills-grid fade">
     <div class="skill-card">
       <h4>Simulation &amp; FEA</h4>
       <ul>
@@ -669,7 +555,7 @@
         <li>Static &amp; fatigue FEA</li>
         <li>Composite structures</li>
         <li>Classical hand calculations</li>
-        <li>Vibration &amp; NVH analysis</li>
+        <li>Vibration analysis</li>
       </ul>
     </div>
     <div class="skill-card">
@@ -695,9 +581,9 @@
     <div class="skill-card">
       <h4>Programming</h4>
       <ul>
-        <li>Python — NumPy, Pandas</li>
+        <li>Python (NumPy, Pandas)</li>
         <li>HDF5 data processing</li>
-        <li>MATLAB — FFT, signal processing</li>
+        <li>MATLAB (FFT, signal processing)</li>
         <li>Machine learning</li>
         <li>Git</li>
       </ul>
@@ -715,45 +601,37 @@
   </div>
 </section>
 
-<!-- ── CONTACT ── -->
+<hr class="section-divider" />
+
+<!-- contact -->
 <section id="contact">
-  <div class="sec-header fade-in">
-    <span class="sec-num">03 —</span>
-    <h2 class="sec-title">Contact</h2>
-  </div>
-  <div class="contact-grid fade-in">
+  <h2 class="sec-title fade">Contact</h2>
+  <div class="contact-row fade">
     <a class="contact-card" href="mailto:thanejohannsen@gmail.com">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
       thanejohannsen@gmail.com
     </a>
     <a class="contact-card" href="https://linkedin.com/in/thane-johannsen" target="_blank">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-      linkedin.com/in/thane-johannsen
+      LinkedIn
     </a>
     <a class="contact-card" href="tel:5129375696">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
       (512) 937-5696
     </a>
-    <a class="contact-card" href="Thane_Johannsen_Resume.docx" download>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download Resume
-    </a>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Thane Johannsen</span>
-  <span>Austin, TX</span>
+  &copy; 2026 Thane Johannsen
 </footer>
 
 <script>
-  // ── Lightbox ──
   function openLB(el) {
-    const img  = el.querySelector('img');
-    const cap  = el.dataset.caption || '';
+    const img = el.querySelector('img');
     document.getElementById('lb-img').src = img.src;
     document.getElementById('lb-img').alt = img.alt;
-    document.getElementById('lb-caption').textContent = cap;
+    document.getElementById('lb-caption').textContent = el.dataset.cap || '';
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -764,11 +642,10 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
 
-  // ── Fade-in on scroll ──
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
   }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>

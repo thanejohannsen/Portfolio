@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume — Thane Johannsen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg2: #f7f8fa;
+      --text: #1a1d27;
+      --text2: #3d4250;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --max-w: 800px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg2);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* nav — same as index */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-name {
+      font-size: 0.9rem; font-weight: 700; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-name span { font-weight: 400; color: var(--muted); }
+    nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    nav a { color: var(--text2); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color .2s; }
+    nav a:hover { color: var(--accent); }
+
+    /* resume container */
+    .resume-page {
+      max-width: var(--max-w);
+      margin: 2.5rem auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3rem 3.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    }
+
+    /* header */
+    .r-name {
+      text-align: center;
+      font-size: 1.8rem; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .r-contact {
+      text-align: center;
+      font-size: 0.85rem; color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+    .r-contact a { color: var(--muted); text-decoration: none; }
+    .r-contact a:hover { color: var(--accent); }
+
+    /* section headers */
+    .r-section {
+      font-size: 0.82rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text);
+      padding-bottom: 0.4rem;
+      border-bottom: 1.5px solid var(--text);
+      margin-top: 1.6rem; margin-bottom: 0.8rem;
+    }
+
+    /* summary */
+    .r-summary {
+      font-size: 0.88rem; color: var(--text2);
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+
+    /* job header */
+    .r-job {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      gap: 0.3rem;
+      margin-top: 0.8rem; margin-bottom: 0.3rem;
+    }
+    .r-company { font-size: 0.92rem; font-weight: 700; }
+    .r-title { font-size: 0.88rem; font-style: italic; color: var(--text2); }
+    .r-dates { margin-left: auto; font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+
+    /* bullets */
+    .r-bullets { list-style: none; padding-left: 0; }
+    .r-bullets li {
+      font-size: 0.86rem; color: var(--text2); line-height: 1.65;
+      padding-left: 1.1rem; position: relative;
+      margin-bottom: 0.25rem;
+    }
+    .r-bullets li::before {
+      content: "\2022";
+      position: absolute; left: 0; color: var(--muted);
+    }
+
+    /* skills */
+    .r-skill-line {
+      font-size: 0.86rem; margin-bottom: 0.2rem;
+    }
+    .r-skill-cat { font-weight: 700; }
+
+    /* education */
+    .r-edu-row {
+      display: flex; align-items: baseline; gap: 0.3rem;
+      margin-bottom: 0.15rem;
+    }
+    .r-edu-row .r-dates { margin-left: auto; }
+    .r-edu-school { font-size: 0.92rem; font-weight: 700; }
+    .r-edu-degree { font-size: 0.88rem; font-style: italic; color: var(--text2); }
+    .r-edu-tracks { font-size: 0.85rem; color: var(--text2); }
+
+    footer {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 1.5rem 2rem;
+      font-size: 0.78rem; color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .resume-page { margin: 1rem; padding: 1.5rem; }
+      .r-name { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" href="index.html">Thane Johannsen <span>— Mechanical Engineer</span></a>
+  <ul>
+    <li><a href="index.html#projects">Portfolio</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="resume-page">
+
+  <div class="r-name">Thane Johannsen</div>
+  <div class="r-contact">
+    <a href="mailto:thanejohannsen@gmail.com">thanejohannsen@gmail.com</a> &nbsp;&bull;&nbsp;
+    (512) 937-5696 &nbsp;&bull;&nbsp;
+    <a href="https://linkedin.com/in/thane-johannsen" target="_blank">linkedin.com/in/thane-johannsen</a>
+  </div>
+
+  <div class="r-section">Professional Summary</div>
+  <p class="r-summary">
+    Mechanical engineer with 2 years of hands-on structural analysis experience running static and fatigue
+    FEA (NASTRAN / PATRAN) across 45,000+ load scenarios on certified aerospace hardware through full
+    pre-PDR to CDR design cycles. Built Python tooling that accelerated loadset extraction 800% and led
+    an allowables campaign that validated a material change delivering ~20% weight savings. Targeting
+    mechanical, structural, simulation, and R&D engineering roles where analytical rigor meets automation.
+  </p>
+
+  <div class="r-section">Professional Experience</div>
+
+  <div class="r-job">
+    <span class="r-company">Nordam</span>
+    <span class="r-title">&mdash; Mechanical Engineer &mdash; Structural Analysis</span>
+    <span class="r-dates">June 2024 &ndash; Present</span>
+  </div>
+  <ul class="r-bullets">
+    <li>Built a Python pipeline to extract element load and stress results from HDF5 FEA output files, accelerating loadset extraction 800% vs. the prior workflow and reclaiming hours of engineering time per analysis cycle.</li>
+    <li>Performed static and fatigue FEA (NASTRAN / PATRAN) and classical hand calculations on composite and metallic nacelle structures, substantiating structural integrity across 45,000+ load scenarios for FAA / EASA certification.</li>
+    <li>Led the allowables campaign qualifying a Nickel-Cobalt electroformed alloy to replace CRES 321 stainless on the nacelle inlet duct skin &mdash; designed ASTM-standard shear coupons and executed the test program, validating 5x impact resistance and enabling ~20% weight savings via a thinner skin.</li>
+    <li>Supported nacelle component development from pre-PDR through CDR &mdash; presented analysis in design reviews, authored structural substantiation reports, and drove design-for-manufacturing decisions with design and program teams.</li>
+    <li>Delivered structural substantiation packages on cert-driven part-release timelines, translating FEA results into actionable design-change decisions.</li>
+  </ul>
+
+  <div class="r-job">
+    <span class="r-company">Duffl</span>
+    <span class="r-title">&mdash; Data Analyst &amp; Store Manager</span>
+    <span class="r-dates">Jan 2023 &ndash; May 2024</span>
+  </div>
+  <ul class="r-bullets">
+    <li>Built a Python demand-forecasting model predicting order-volume spikes and required staffing levels under operational constraints; model was adopted by store leadership as the basis for weekly shift scheduling, reducing late delivery rate 30% after rollout.</li>
+    <li>Hired, trained, and evaluated store team members across shift operations.</li>
+  </ul>
+
+  <div class="r-section">Projects &amp; Research</div>
+
+  <div class="r-job">
+    <span class="r-company">UT Austin Capstone</span>
+    <span class="r-title">&mdash; Structural Dynamics Characterization</span>
+    <span class="r-dates">Jan &ndash; May 2024</span>
+  </div>
+  <ul class="r-bullets">
+    <li>Developed a characterization process to extract damping ratios and spring constants from free-response accelerometer data, enabling vibration-matched test stand design for semiconductor equipment validation.</li>
+    <li>Captured accelerometer data under dynamic and free-response conditions and used MATLAB to model the system's vibrational response, extracting damping and spring constants.</li>
+  </ul>
+
+  <div class="r-job">
+    <span class="r-company">Battle Bot Design Project</span>
+    <span class="r-title">&mdash; UT Austin &mdash; ME 366J</span>
+    <span class="r-dates">Aug &ndash; Dec 2023</span>
+  </div>
+  <ul class="r-bullets">
+    <li>Designed and built a competition battlebot with a 4-person team under strict weight and budget constraints; optimized chassis via truss design and low-density, high-flexibility materials, and machined steel plow mechanisms for arena navigation.</li>
+  </ul>
+
+  <div class="r-job">
+    <span class="r-company">Lu Research Group</span>
+    <span class="r-title">&mdash; EMG Development &amp; Research</span>
+    <span class="r-dates">Jan &ndash; May 2022</span>
+  </div>
+  <ul class="r-bullets">
+    <li>Developed a surface EMG sensor to detect muscle voltage burst patterns during dynamic movement; processed signals via MATLAB FFT to track fatigue in the frequency domain toward a real-time strain-risk product concept.</li>
+  </ul>
+
+  <div class="r-section">Skills</div>
+  <p class="r-skill-line"><span class="r-skill-cat">Simulation &amp; Analysis:</span> MSC NASTRAN, PATRAN, Finite Element Analysis (static, fatigue, composites), classical hand calculations, ASTM coupon test design</p>
+  <p class="r-skill-line"><span class="r-skill-cat">Programming &amp; Data:</span> Python (NumPy, Pandas, HDF5 processing), MATLAB (FFT, signal processing, system ID), Git</p>
+  <p class="r-skill-line"><span class="r-skill-cat">CAD &amp; Design:</span> CATIA, SolidWorks</p>
+  <p class="r-skill-line"><span class="r-skill-cat">Engineering Process:</span> FAA / EASA certification requirements, design reviews (PDR / CDR), Design for Manufacturing (DFM), technical report writing</p>
+
+  <div class="r-section">Education</div>
+  <div class="r-edu-row">
+    <span class="r-edu-school">The University of Texas at Austin</span>
+    <span class="r-dates">May 2024</span>
+  </div>
+  <div class="r-edu-row">
+    <span class="r-edu-degree">Bachelor of Science, Mechanical Engineering</span>
+    <span class="r-dates">GPA: 3.89</span>
+  </div>
+  <p class="r-edu-tracks">Tracks: Vibrations and Controls; Manufacturing and Design</p>
+
+</div>
+
+<footer>&copy; 2026 Thane Johannsen</footer>
+
+</body>
+</html>
