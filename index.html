@@ -252,6 +252,7 @@
       transition: transform .4s ease;
     }
     .iw.contain img { object-fit: contain; background: #fff; padding: 6px; }
+    .iw.contain-dark img { object-fit: contain; background: var(--bg2); padding: 0; }
     .iw:hover img { transform: scale(1.04); }
     .iw .cap {
       position: absolute; bottom: 0; left: 0; right: 0;
@@ -585,7 +586,7 @@
         motor controllers. Data was collected and an ML model was developed for autonomous navigation.
       </div>
       <div class="ig c2">
-        <div class="iw contain h220" data-cap="LIDAR robot — full assembly" onclick="openLB(this)"><img src="images/lidar_car.jpeg" alt="LIDAR" /><div class="cap">LIDAR robot</div></div>
+        <div class="iw contain-dark h220" data-cap="LIDAR robot — full assembly" onclick="openLB(this)"><img src="images/lidar_car.jpeg" alt="LIDAR" /><div class="cap">LIDAR robot</div></div>
         <div class="vid" style="height:220px;"><video controls preload="metadata"><source src="images/lidar_driving.mov" type="video/mp4" /><source src="images/lidar_driving.mov" type="video/quicktime" /></video></div>
       </div>
       <div class="tags">
